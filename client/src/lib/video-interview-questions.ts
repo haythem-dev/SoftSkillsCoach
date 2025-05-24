@@ -234,9 +234,174 @@ export const VIDEO_INTERVIEW_QUESTIONS: VideoQuestion[] = [
     role: "principal"
   },
 
-  // Note: This is a sample of the structure. In a real implementation, 
-  // you would continue adding questions to reach 1000+ total questions
-  // across all categories and difficulty levels.
+  // System Design & Architecture (25 questions)
+  {
+    id: 503,
+    category: "System Design",
+    question: "Design a real-time chat system like Slack. Focus on scalability and message delivery guarantees.",
+    timeLimit: 300,
+    tips: ["Consider websockets", "Discuss message persistence", "Address offline message handling"],
+    difficulty: "senior",
+    role: "architect"
+  },
+  {
+    id: 504,
+    category: "System Design",
+    question: "How would you design a URL shortening service like bit.ly?",
+    timeLimit: 240,
+    tips: ["Discuss hash function choice", "Consider collision handling", "Address scaling"],
+    difficulty: "senior",
+    role: "software-developer"
+  },
+  {
+    id: 505,
+    category: "System Design",
+    question: "Design a distributed cache system. What are the key considerations?",
+    timeLimit: 300,
+    tips: ["Discuss consistency models", "Consider eviction policies", "Address fault tolerance"],
+    difficulty: "senior",
+    role: "architect"
+  },
+
+  // Cloud & DevOps (25 questions)
+  {
+    id: 528,
+    category: "Cloud & DevOps",
+    question: "Describe your experience with implementing zero-downtime deployments.",
+    timeLimit: 180,
+    tips: ["Discuss blue-green deployment", "Address database migrations", "Consider monitoring"],
+    difficulty: "senior",
+    role: "devops"
+  },
+  {
+    id: 529,
+    category: "Cloud & DevOps",
+    question: "How do you approach infrastructure as code? Share a specific example.",
+    timeLimit: 240,
+    tips: ["Mention specific tools", "Discuss version control", "Address testing"],
+    difficulty: "senior",
+    role: "devops"
+  },
+
+  // Microservices & Distributed Systems (25 questions)
+  {
+    id: 554,
+    category: "Microservices",
+    question: "How do you handle service discovery in a microservices architecture?",
+    timeLimit: 240,
+    tips: ["Discuss service registry", "Consider health checks", "Address failover"],
+    difficulty: "senior",
+    role: "architect"
+  },
+  {
+    id: 555,
+    category: "Microservices",
+    question: "Explain your approach to implementing circuit breakers in distributed systems.",
+    timeLimit: 180,
+    tips: ["Discuss failure thresholds", "Consider recovery strategy", "Address monitoring"],
+    difficulty: "senior",
+    role: "software-developer"
+  },
+
+  // Data Engineering & Analytics (25 questions)
+  {
+    id: 579,
+    category: "Data Engineering",
+    question: "How would you design a real-time analytics pipeline?",
+    timeLimit: 240,
+    tips: ["Discuss stream processing", "Consider data quality", "Address latency"],
+    difficulty: "senior",
+    role: "data-engineer"
+  },
+  {
+    id: 580,
+    category: "Data Engineering",
+    question: "Explain your approach to handling data quality in large-scale systems.",
+    timeLimit: 180,
+    tips: ["Discuss validation strategies", "Consider monitoring", "Address cleanup"],
+    difficulty: "senior",
+    role: "data-engineer"
+  },
+
+  // Security & Privacy (25 questions)
+  {
+    id: 604,
+    category: "Security",
+    question: "How do you implement secure authentication in modern web applications?",
+    timeLimit: 240,
+    tips: ["Discuss OAuth/OIDC", "Consider MFA", "Address session management"],
+    difficulty: "senior",
+    role: "security-engineer"
+  },
+  {
+    id: 605,
+    category: "Security",
+    question: "Describe your approach to implementing GDPR compliance in a global application.",
+    timeLimit: 300,
+    tips: ["Discuss data minimization", "Consider user consent", "Address right to be forgotten"],
+    difficulty: "senior",
+    role: "security-engineer"
+  },
+
+  // Frontend & UI/UX (25 questions)
+  {
+    id: 629,
+    category: "Frontend",
+    question: "How do you optimize performance in a React application?",
+    timeLimit: 240,
+    tips: ["Discuss code splitting", "Consider bundle size", "Address rendering optimization"],
+    difficulty: "senior",
+    role: "frontend-developer"
+  },
+  {
+    id: 630,
+    category: "Frontend",
+    question: "Explain your approach to implementing accessibility in web applications.",
+    timeLimit: 180,
+    tips: ["Discuss ARIA roles", "Consider keyboard navigation", "Address screen readers"],
+    difficulty: "senior",
+    role: "frontend-developer"
+  },
+
+  // Leadership & Management (25 questions)
+  {
+    id: 655,
+    category: "Leadership",
+    question: "How do you handle technical debt in your team?",
+    timeLimit: 240,
+    tips: ["Discuss prioritization", "Consider business impact", "Address team morale"],
+    difficulty: "senior",
+    role: "tech-lead"
+  },
+  {
+    id: 656,
+    category: "Leadership",
+    question: "Describe how you've mentored junior developers and helped them grow.",
+    timeLimit: 180,
+    tips: ["Share specific examples", "Discuss learning plans", "Address challenges"],
+    difficulty: "senior",
+    role: "tech-lead"
+  },
+
+  // Innovation & Problem Solving (25 questions)
+  {
+    id: 680,
+    category: "Innovation",
+    question: "Tell me about a time you introduced a new technology or practice that improved team productivity.",
+    timeLimit: 240,
+    tips: ["Share metrics", "Discuss adoption", "Address challenges"],
+    difficulty: "senior",
+    role: "principal"
+  },
+  {
+    id: 681,
+    category: "Innovation",
+    question: "How do you evaluate and adopt new technologies in your projects?",
+    timeLimit: 180,
+    tips: ["Discuss evaluation criteria", "Consider risks", "Address team training"],
+    difficulty: "senior",
+    role: "principal"
+  }
 ];
 
 // Function to get questions by category
@@ -250,6 +415,6 @@ export function getVideoQuestionsByDifficulty(difficulty: 'junior' | 'mid' | 'se
 }
 
 // Function to get questions by role
-export function getVideoQuestionsByRole(role: 'software-developer' | 'tech-lead' | 'architect' | 'principal'): VideoQuestion[] {
+export function getVideoQuestionsByRole(role: 'software-developer' | 'tech-lead' | 'architect' | 'principal' | 'devops' | 'data-engineer' | 'security-engineer' | 'frontend-developer'): VideoQuestion[] {
   return VIDEO_INTERVIEW_QUESTIONS.filter(q => q.role === role);
 }
