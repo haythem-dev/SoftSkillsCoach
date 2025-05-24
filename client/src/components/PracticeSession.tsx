@@ -34,6 +34,9 @@ export default function PracticeSession({ role, category, onEndSession }: Practi
     },
   });
 
+  const totalQuestions = questions.length;
+  const currentQuestion = questions[currentQuestionIndex];
+
   const createSessionMutation = useMutation({
     mutationFn: async (sessionData: any) => {
       const response = await apiRequest("POST", "/api/sessions", sessionData);
@@ -74,9 +77,6 @@ export default function PracticeSession({ role, category, onEndSession }: Practi
       });
     }
   }, [questions]);
-
-  const currentQuestion = questions[currentQuestionIndex];
-  const totalQuestions = questions.length;
 
   const handleNextQuestion = () => {
     if (response.trim() && sessionId && currentQuestion) {
