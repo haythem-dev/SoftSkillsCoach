@@ -187,8 +187,6 @@ export default function VideoInterview() {
   const currentQ = sessionQuestions[currentQuestion];
   const timeRemaining = currentQ?.timeLimit ? currentQ.timeLimit - recordingTime : 0;
   const isTimeWarning = timeRemaining <= 30 && isRecording;
-  const isTimeUp = timeRemaining <= 0 && isRecording;
-
   useEffect(() => {
     if (timeRemaining <= 0 && isRecording) {
       stopRecording();
@@ -198,7 +196,7 @@ export default function VideoInterview() {
         variant: "destructive"
       });
     }
-  }, [timeRemaining, isRecording, stopRecording]);
+  }, [timeRemaining, isRecording, toast]);
 
   return (
     <div className="space-y-6">
