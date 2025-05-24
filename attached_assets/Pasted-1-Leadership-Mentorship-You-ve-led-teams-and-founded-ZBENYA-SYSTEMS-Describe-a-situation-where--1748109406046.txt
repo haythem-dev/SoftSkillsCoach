@@ -1,0 +1,56 @@
+1. Leadership & Mentorship
+You’ve led teams and founded ZBENYA SYSTEMS. Describe a situation where you mentored a junior engineer or resolved a conflict within your team.
+
+How do you balance being a hands-on developer with your responsibilities as a leader/consultant?
+
+As an expert, how do you handle disagreements with stakeholders (e.g., clients or team members) over technical decisions?
+
+2. Teamwork & Collaboration
+You mention working both independently and in teams. Share an example of a cross-functional project (e.g., hardware/software integration) where collaboration was critical.
+
+How do you ensure effective communication between remote teams or departments (e.g., hardware vs. software teams)?
+
+Describe a time you had to adapt your communication style to work with a non-technical audience (e.g., clients or managers).
+
+3. Problem-Solving & Innovation
+Your resume highlights "innovative solutions." Walk us through a complex technical problem you solved creatively (e.g., in embedded systems or architectural design).
+
+How do you approach debugging a system where the root cause spans both hardware and software?
+
+Give an example of a project where you had to pivot due to changing requirements (e.g., in automotive or smart home applications).
+
+4. Adaptability & Client Management
+As a consultant, how do you handle a client who insists on an impractical solution? How do you guide them toward a better approach?
+
+Describe a time you had to quickly learn a new technology/tool to meet a project deadline.
+
+How do you prioritize tasks when juggling multiple client projects or roles (e.g., development, testing, and consulting)?
+
+5. Communication & Influence
+How do you explain highly technical constraints (e.g., embedded system limitations) to a client who prioritizes feature speed over feasibility?
+
+Share a time you had to persuade your team or a client to adopt a solution they were initially resistant to.
+
+What strategies do you use to document and present architectural decisions to stakeholders?
+
+6. Work Ethic & Independence
+You work as an independent consultant. How do you stay motivated and disciplined without direct supervision?
+
+Describe a long-term project where you had to maintain progress despite obstacles (e.g., supply chain delays in hardware projects).
+
+How do you ensure quality and avoid burnout when managing tight deadlines?
+
+Closing Questions
+What soft skill do you think is most critical for a senior engineer/consultant in your field, and how have you developed it?
+
+How do you handle feedback from clients or team members on your technical or managerial approach?
+
+Notes for Interviewer:
+
+Probe for specific examples (e.g., tools used, stakeholder dynamics, measurable outcomes).
+
+Assess cultural fit for consulting roles: client empathy, negotiation, and business acumen.
+
+For CDI roles, explore long-term collaboration and mentorship styles.
+
+This aligns with your LinkedIn profile’s emphasis on cross-disciplinary expertise and client-facing innovation. Adjust based on the role’s focus (e.g., automotive vs. smart home).
