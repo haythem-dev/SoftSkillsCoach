@@ -106,7 +106,6 @@ export default function VideoInterview() {
   }, [recordingTime, isRecording, sessionQuestions, currentQuestion, toast]);
 
   const currentQ = sessionQuestions[currentQuestion];
-  const timeRemaining = currentQ?.timeLimit ? currentQ.timeLimit - recordingTime : 0;
   const isTimeWarning = timeRemaining <= 30 && isRecording;
 
   const startCamera = async () => {
