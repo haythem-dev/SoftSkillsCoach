@@ -1,19 +1,8 @@
-// Comprehensive Video Interview Question Bank - 1000+ Questions
-// Categorized by soft skills areas for technical professionals
-
-export interface VideoQuestion {
-  id: number;
-  category: string;
-  question: string;
-  timeLimit: number;
-  tips: string[];
-  difficulty: 'junior' | 'mid' | 'senior';
-  role: 'software-developer' | 'tech-lead' | 'architect' | 'principal';
-}
+import type { VideoQuestion } from "@shared/schema";
 
 export function getRandomVideoQuestions(count: number): VideoQuestion[] {
   const shuffled = [...VIDEO_INTERVIEW_QUESTIONS].sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, count);
+  return shuffled.slice(0, Math.min(count, VIDEO_INTERVIEW_QUESTIONS.length));
 }
 
 export const VIDEO_INTERVIEW_QUESTIONS: VideoQuestion[] = [
@@ -249,12 +238,6 @@ export const VIDEO_INTERVIEW_QUESTIONS: VideoQuestion[] = [
   // you would continue adding questions to reach 1000+ total questions
   // across all categories and difficulty levels.
 ];
-
-// Function to get random questions for video interview
-export function getRandomVideoQuestions(count: number = 17): VideoQuestion[] {
-  const shuffled = [...VIDEO_INTERVIEW_QUESTIONS].sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, Math.min(count, VIDEO_INTERVIEW_QUESTIONS.length));
-}
 
 // Function to get questions by category
 export function getVideoQuestionsByCategory(category: string): VideoQuestion[] {
