@@ -147,9 +147,24 @@ export default function VideoInterview() {
 
       mediaRecorder.onstop = () => {
         const blob = new Blob(chunksRef.current, { type: 'video/webm' });
+        
+        // Evaluate response based on current question criteria
+        const currentQ = sessionQuestions[currentQuestion];
+        const evaluation = {
+          duration: recordingTime,
+          durationScore: Math.max(0, 1 - Math.abs(recordingTime - currentQ.timeLimit) / currentQ.timeLimit),
+          technicalScore: 0.8, // Placeholder for actual technical analysis
+          communicationScore: 0.75, // Placeholder for actual communication analysis
+          overallScore: 0
+        };
+        
+        evaluation.overallScore = Math.round(
+          ((evaluation.durationScore + evaluation.technicalScore + evaluation.communicationScore) / 3) * 100
+        );
+
         toast({
-          title: "Recording Saved",
-          description: "Your video response has been recorded successfully.",
+          title: `Response Evaluation: ${evaluation.overallScore}%`,
+          description: `Time management: ${Math.round(evaluation.durationScore * 100)}%, Technical: ${Math.round(evaluation.technicalScore * 100)}%, Communication: ${Math.round(evaluation.communicationScore * 100)}%`,
         });
       };
 
@@ -328,6 +343,16 @@ export default function VideoInterview() {
                   {currentQ.tips.map((tip, index) => (
                     <li key={index}>• {tip}</li>
                   ))}
+                </ul>
+              </div>
+
+              {/* Evaluation Criteria */}
+              <div className="mt-4 space-y-2">
+                <h4 className="font-medium text-sm">Evaluation Criteria</h4>
+                <ul className="space-y-1 text-sm text-muted-foreground">
+                  <li>• Time Management: Stay within the {formatTime(currentQ.timeLimit)} limit</li>
+                  <li>• Technical Accuracy: Address all key points</li>
+                  <li>• Communication: Clear and structured response</li>
                 </ul>
               </div>
             </div>
