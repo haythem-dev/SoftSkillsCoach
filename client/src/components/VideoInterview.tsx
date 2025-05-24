@@ -45,6 +45,8 @@ export default function VideoInterview() {
     if (questions && questions.length > 0) {
       setSessionQuestions(questions);
       setCurrentQuestion(0);
+      setTimeRemaining(questions[0].timeLimit);
+      setRecordingTime(0);
     }
   }, []);
 
