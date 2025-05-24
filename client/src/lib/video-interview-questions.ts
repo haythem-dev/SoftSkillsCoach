@@ -11,6 +11,11 @@ export interface VideoQuestion {
   role: 'software-developer' | 'tech-lead' | 'architect' | 'principal';
 }
 
+export function getRandomVideoQuestions(count: number): VideoQuestion[] {
+  const shuffled = [...VIDEO_INTERVIEW_QUESTIONS].sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, count);
+}
+
 export const VIDEO_INTERVIEW_QUESTIONS: VideoQuestion[] = [
   // Communication Skills (200 questions)
   {

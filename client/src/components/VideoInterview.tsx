@@ -33,8 +33,10 @@ export default function VideoInterview() {
 
   // Initialize random questions for this session
   useEffect(() => {
-    const questions = getRandomVideoQuestions(17);
-    setSessionQuestions(questions);
+    const questions = getRandomVideoQuestions(5);
+    if (questions && questions.length > 0) {
+      setSessionQuestions(questions);
+    }
   }, []);
 
   useEffect(() => {
