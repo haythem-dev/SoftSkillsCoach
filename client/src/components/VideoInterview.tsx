@@ -20,18 +20,23 @@ import { useToast } from "@/hooks/use-toast";
 import { getRandomVideoQuestions, VIDEO_INTERVIEW_QUESTIONS, type VideoQuestion } from "@/lib/video-interview-questions";
 
 export default function VideoInterview() {
+  // All useState hooks declared first
   const [isRecording, setIsRecording] = useState(false);
   const [videoEnabled, setVideoEnabled] = useState(true);
   const [audioEnabled, setAudioEnabled] = useState(true);
   const [recordingTime, setRecordingTime] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [sessionQuestions, setSessionQuestions] = useState<VideoQuestion[]>([]);
+
+  // All useRef hooks
   const videoRef = useRef<HTMLVideoElement>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
+
+  // useToast hook
   const { toast } = useToast();
 
-  // Initialize random questions for this session
+  // All useEffect hooks
   useEffect(() => {
     const questions = getRandomVideoQuestions(5);
     if (questions && questions.length > 0) {
@@ -56,6 +61,26 @@ export default function VideoInterview() {
       stopCamera();
     };
   }, []);
+
+  useEffect(() => {
+    if (videoRef.current?.srcObject) {
+      const stream = videoRef.current.srcObject as MediaStream;
+      const videoTrack = stream.getVideoTracks()[0];
+      if (videoTrack) {
+        videoTrack.enabled = videoEnabled;
+      }
+    }
+  }, [videoEnabled]);
+
+  useEffect(() => {
+    if (videoRef.current?.srcObject) {
+      const stream = videoRef.current.srcObject as MediaStream;
+      const audioTrack = stream.getAudioTracks()[0];
+      if (audioTrack) {
+        audioTrack.enabled = audioEnabled;
+      }
+    }
+  }, [audioEnabled]);
 
   const startCamera = async () => {
     try {
@@ -101,7 +126,6 @@ export default function VideoInterview() {
 
       mediaRecorder.onstop = () => {
         const blob = new Blob(chunksRef.current, { type: 'video/webm' });
-        // Here you would typically upload the blob to your server
         toast({
           title: "Recording Saved",
           description: "Your video response has been recorded successfully.",
@@ -132,30 +156,12 @@ export default function VideoInterview() {
     }
   };
 
-  const toggleVideo = async () => {
-    const newVideoState = !videoEnabled;
-    setVideoEnabled(newVideoState);
-
-    if (videoRef.current?.srcObject) {
-      const stream = videoRef.current.srcObject as MediaStream;
-      const videoTrack = stream.getVideoTracks()[0];
-      if (videoTrack) {
-        videoTrack.enabled = newVideoState;
-      }
-    }
+  const toggleVideo = () => {
+    setVideoEnabled(!videoEnabled);
   };
 
-  const toggleAudio = async () => {
-    const newAudioState = !audioEnabled;
-    setAudioEnabled(newAudioState);
-
-    if (videoRef.current?.srcObject) {
-      const stream = videoRef.current.srcObject as MediaStream;
-      const audioTrack = stream.getAudioTracks()[0];
-      if (audioTrack) {
-        audioTrack.enabled = newAudioState;
-      }
-    }
+  const toggleAudio = () => {
+    setAudioEnabled(!audioEnabled);
   };
 
   const formatTime = (seconds: number) => {
