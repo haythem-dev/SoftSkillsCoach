@@ -4,23 +4,14 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { 
-  Video, 
-  VideoOff, 
-  Mic, 
-  MicOff, 
-  Play,
-  Square,
-  RefreshCw,
-  Settings,
-  Monitor,
-  User,
-  Clock
+  Video, VideoOff, Mic, MicOff, Play, Square, 
+  RefreshCw, Settings, Monitor, User, Clock 
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { getRandomVideoQuestions, VIDEO_INTERVIEW_QUESTIONS, type VideoQuestion } from "@/lib/video-interview-questions";
 
 export default function VideoInterview() {
-  // All useState hooks
+  // States
   const [isRecording, setIsRecording] = useState(false);
   const [videoEnabled, setVideoEnabled] = useState(true);
   const [audioEnabled, setAudioEnabled] = useState(true);
@@ -30,12 +21,12 @@ export default function VideoInterview() {
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [isTimeWarning, setIsTimeWarning] = useState(false);
 
-  // All useRef hooks
+  // Refs
   const videoRef = useRef<HTMLVideoElement>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
 
-  // useToast hook
+  // Toast
   const { toast } = useToast();
 
   // Initialize questions
@@ -90,22 +81,27 @@ export default function VideoInterview() {
     }
   }, [audioEnabled]);
 
-  // Time management
+  // Handle recording time limit
   useEffect(() => {
     const currentQ = sessionQuestions[currentQuestion];
-    const timeRemaining = currentQ?.timeLimit ? currentQ.timeLimit - recordingTime : 0;
-
-    if (timeRemaining <= 0 && isRecording) {
+    if (currentQ && recordingTime >= currentQ.timeLimit) {
       stopRecording();
       toast({
-        title: "Time's Up!",
-        description: "The recording has been automatically stopped as you've reached the time limit.",
-        variant: "destructive"
+        title: "Time's up!",
+        description: "Maximum recording time reached.",
       });
     }
-  }, [recordingTime, isRecording, sessionQuestions, currentQuestion, toast]);
+  }, [recordingTime, currentQuestion, sessionQuestions, toast]);
 
-  const currentQ = sessionQuestions[currentQuestion];
+    // Time remaining warning
+    useEffect(() => {
+      const currentQ = sessionQuestions[currentQuestion];
+      if (currentQ) {
+        const remaining = currentQ.timeLimit - recordingTime;
+        setTimeRemaining(remaining);
+        setIsTimeWarning(remaining <= 30 && isRecording);
+      }
+    }, [recordingTime, isRecording, sessionQuestions, currentQuestion]);
 
   const startCamera = async () => {
     try {
@@ -209,6 +205,7 @@ export default function VideoInterview() {
     return <div>Loading questions...</div>;
   }
 
+  const currentQ = sessionQuestions[currentQuestion];
 
   return (
     <div className="space-y-6">
