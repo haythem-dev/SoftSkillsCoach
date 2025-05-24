@@ -40,7 +40,7 @@ export default function VideoInterview() {
 
   // Initialize questions
   useEffect(() => {
-    const questions = getRandomVideoQuestions(5);
+    const questions = getRandomVideoQuestions(17);
     if (questions && questions.length > 0) {
       setSessionQuestions(questions);
       setCurrentQuestion(0);
