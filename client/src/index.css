@@ -1,0 +1,155 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --background: 220 13% 98%; /* #F8FAFC */
+  --foreground: 216 32% 17%; /* #1E293B */
+  --muted: 210 11% 96%; /* #F1F5F9 */
+  --muted-foreground: 215 16% 47%; /* #64748B */
+  --popover: 0 0% 100%; /* #FFFFFF */
+  --popover-foreground: 216 32% 17%; /* #1E293B */
+  --card: 0 0% 100%; /* #FFFFFF */
+  --card-foreground: 216 32% 17%; /* #1E293B */
+  --border: 214 19% 91%; /* #E2E8F0 */
+  --input: 214 19% 91%; /* #E2E8F0 */
+  --primary: 217 91% 60%; /* #2563EB */
+  --primary-foreground: 215 100% 99%; /* #F0F9FF */
+  --secondary: 210 11% 96%; /* #F1F5F9 */
+  --secondary-foreground: 216 32% 17%; /* #1E293B */
+  --accent: 158 64% 52%; /* #10B981 */
+  --accent-foreground: 0 0% 100%; /* #FFFFFF */
+  --destructive: 0 84% 60%; /* #EF4444 */
+  --destructive-foreground: 0 0% 98%; /* #FEFEFE */
+  --ring: 217 91% 60%; /* #2563EB */
+  --radius: 0.5rem;
+  
+  /* Custom tech theme variables */
+  --tech-surface: 0 0% 100%; /* #FFFFFF */
+  --tech-border: 214 19% 91%; /* #E2E8F0 */
+  --tech-code-bg: 210 11% 96%; /* #F1F5F9 */
+}
+
+.dark {
+  --background: 216 32% 17%; /* #1E293B */
+  --foreground: 0 0% 98%; /* #FAFAFA */
+  --muted: 215 28% 21%; /* #334155 */
+  --muted-foreground: 215 16% 65%; /* #94A3B8 */
+  --popover: 216 32% 17%; /* #1E293B */
+  --popover-foreground: 0 0% 98%; /* #FAFAFA */
+  --card: 216 32% 17%; /* #1E293B */
+  --card-foreground: 0 0% 98%; /* #FAFAFA */
+  --border: 215 28% 21%; /* #334155 */
+  --input: 215 28% 21%; /* #334155 */
+  --primary: 217 91% 60%; /* #2563EB */
+  --primary-foreground: 215 100% 99%; /* #F0F9FF */
+  --secondary: 215 28% 21%; /* #334155 */
+  --secondary-foreground: 0 0% 98%; /* #FAFAFA */
+  --accent: 158 64% 52%; /* #10B981 */
+  --accent-foreground: 0 0% 100%; /* #FFFFFF */
+  --destructive: 0 62% 47%; /* #DC2626 */
+  --destructive-foreground: 0 0% 98%; /* #FAFAFA */
+  --ring: 217 91% 60%; /* #2563EB */
+  
+  /* Custom tech theme variables for dark mode */
+  --tech-surface: 216 32% 17%; /* #1E293B */
+  --tech-border: 215 28% 21%; /* #334155 */
+  --tech-code-bg: 215 28% 21%; /* #334155 */
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  code, pre {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+@layer components {
+  .tech-gradient {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(217 91% 50%) 100%);
+  }
+  
+  .tech-card {
+    @apply bg-white dark:bg-card border border-border rounded-xl shadow-sm;
+  }
+  
+  .tech-button {
+    @apply px-4 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2;
+  }
+  
+  .tech-button-primary {
+    @apply tech-button bg-primary text-primary-foreground hover:bg-primary/90;
+  }
+  
+  .tech-button-secondary {
+    @apply tech-button border border-border text-foreground hover:bg-accent/10;
+  }
+  
+  .tech-input {
+    @apply px-3 py-2 border border-border rounded-lg bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2;
+  }
+  
+  .tech-progress-bar {
+    @apply w-full bg-muted rounded-full h-2 overflow-hidden;
+  }
+  
+  .tech-progress-fill {
+    @apply h-full transition-all duration-300 ease-out;
+  }
+  
+  .role-card {
+    @apply tech-card p-4 cursor-pointer transition-all duration-200 hover:border-primary hover:bg-primary/5;
+  }
+  
+  .role-card.active {
+    @apply bg-primary text-primary-foreground border-primary;
+  }
+  
+  .question-badge {
+    @apply px-3 py-1 text-sm font-medium rounded-full;
+  }
+  
+  .question-badge.primary {
+    @apply bg-primary/10 text-primary;
+  }
+  
+  .question-badge.success {
+    @apply bg-accent/10 text-accent;
+  }
+  
+  .timer-display {
+    @apply text-3xl font-mono font-bold text-primary;
+  }
+  
+  .stats-card {
+    @apply tech-card p-6 text-center;
+  }
+  
+  .stats-number {
+    @apply text-3xl font-bold mb-2;
+  }
+  
+  .stats-label {
+    @apply text-sm text-muted-foreground;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(158 64% 52%) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
