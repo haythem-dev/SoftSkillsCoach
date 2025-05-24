@@ -17,7 +17,7 @@ import {
   Clock
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { getRandomVideoQuestions, type VideoQuestion } from "@/lib/video-interview-questions";
+import { getRandomVideoQuestions, VIDEO_INTERVIEW_QUESTIONS, type VideoQuestion } from "@/lib/video-interview-questions";
 
 export default function VideoInterview() {
   const [isRecording, setIsRecording] = useState(false);
@@ -34,11 +34,14 @@ export default function VideoInterview() {
   // Initialize random questions for this session
   useEffect(() => {
     const questions = getRandomVideoQuestions(5);
-    if (questions && questions.length > 0) {
-      setSessionQuestions(questions);
-      setCurrentQuestion(0);
-    }
+    setSessionQuestions(questions);
+    setCurrentQuestion(0);
   }, []);
+
+  // Safety check for currentQ
+  if (!sessionQuestions.length || currentQuestion >= sessionQuestions.length) {
+    return <div>Loading questions...</div>;
+  }
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
