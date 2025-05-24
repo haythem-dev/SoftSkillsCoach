@@ -24,17 +24,17 @@ export default function Header({ user }: HeaderProps) {
           </div>
           
           <nav className="hidden md:flex items-center space-x-6">
-            <Button variant="ghost" className="text-muted-foreground hover:text-primary">
+            <Button variant="ghost" className="text-muted-foreground hover:text-primary" onClick={() => window.location.href = '/'}>
               Dashboard
             </Button>
-            <Button variant="ghost" className="text-muted-foreground hover:text-primary">
-              Practice
+            <Button variant="ghost" className="text-muted-foreground hover:text-primary" onClick={() => window.location.href = '/assessment'}>
+              Assessment
             </Button>
-            <Button variant="ghost" className="text-muted-foreground hover:text-primary">
-              Progress
+            <Button variant="ghost" className="text-muted-foreground hover:text-primary" onClick={() => window.location.href = '/simulator'}>
+              Simulator
             </Button>
-            <Button variant="ghost" className="text-muted-foreground hover:text-primary">
-              Resources
+            <Button variant="ghost" className="text-muted-foreground hover:text-primary" onClick={() => window.location.href = '/video-interview'}>
+              Video Practice
             </Button>
           </nav>
 
