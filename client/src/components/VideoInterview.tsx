@@ -215,7 +215,7 @@ export default function VideoInterview() {
           <div className="flex items-center justify-between">
             <CardTitle>Video Interview Simulation</CardTitle>
             <Badge variant="outline">
-              Question {currentQuestion + 1} of {sessionQuestions.length}
+              Question {currentQuestion + 1} of 17
             </Badge>
           </div>
         </CardHeader>
