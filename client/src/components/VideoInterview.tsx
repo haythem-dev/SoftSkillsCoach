@@ -36,6 +36,7 @@ export default function VideoInterview() {
     const questions = getRandomVideoQuestions(5);
     if (questions && questions.length > 0) {
       setSessionQuestions(questions);
+      setCurrentQuestion(0);
     }
   }, []);
 
@@ -281,13 +282,19 @@ export default function VideoInterview() {
             {/* Question Panel */}
             <div className="space-y-4">
               <div>
-                <Badge className="mb-3 bg-blue-100 text-blue-800">
-                  {currentQ.category}
-                </Badge>
-                <h3 className="font-semibold text-lg mb-3">Current Question</h3>
-                <p className="text-foreground leading-relaxed">
-                  {currentQ.question}
-                </p>
+                {currentQ ? (
+                  <>
+                    <Badge className="mb-3 bg-blue-100 text-blue-800">
+                      {currentQ.category}
+                    </Badge>
+                    <h3 className="font-semibold text-lg mb-3">Current Question</h3>
+                    <p className="text-foreground leading-relaxed">
+                      {currentQ.question}
+                    </p>
+                  </>
+                ) : (
+                  <p>Loading questions...</p>
+                )}
               </div>
 
               <div className="space-y-2">
