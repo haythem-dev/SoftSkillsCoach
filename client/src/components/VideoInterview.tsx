@@ -153,19 +153,44 @@ export default function VideoInterview() {
         const evaluation = {
           duration: recordingTime,
           durationScore: Math.max(0, 1 - Math.abs(recordingTime - currentQ.timeLimit) / currentQ.timeLimit),
-          technicalScore: 0.8, // Placeholder for actual technical analysis
-          communicationScore: 0.75, // Placeholder for actual communication analysis
+          technicalScore: currentQ.evaluation?.scoringRubric.technical || 0,
+          communicationScore: currentQ.evaluation?.scoringRubric.communication || 0,
+          structureScore: currentQ.evaluation?.scoringRubric.structure || 0,
+          timeManagementScore: currentQ.evaluation?.scoringRubric.timeManagement || 0,
           overallScore: 0
         };
         
         evaluation.overallScore = Math.round(
-          ((evaluation.durationScore + evaluation.technicalScore + evaluation.communicationScore) / 3) * 100
+          ((evaluation.durationScore + evaluation.technicalScore + 
+            evaluation.communicationScore + evaluation.structureScore) / 4) * 100
         );
 
         toast({
           title: `Response Evaluation: ${evaluation.overallScore}%`,
-          description: `Time management: ${Math.round(evaluation.durationScore * 100)}%, Technical: ${Math.round(evaluation.technicalScore * 100)}%, Communication: ${Math.round(evaluation.communicationScore * 100)}%`,
+          description: "View detailed feedback below",
         });
+
+        // Add evaluation display
+        const evaluationDiv = document.createElement('div');
+        evaluationDiv.className = 'mt-4 p-4 bg-slate-50 rounded-lg';
+        evaluationDiv.innerHTML = `
+          <h4 class="font-medium mb-2">Response Evaluation</h4>
+          <div class="space-y-2">
+            <p class="text-sm text-muted-foreground">Time Management: ${Math.round(evaluation.durationScore * 100)}%</p>
+            <p class="text-sm text-muted-foreground">Technical Accuracy: ${Math.round(evaluation.technicalScore * 100)}%</p>
+            <p class="text-sm text-muted-foreground">Communication: ${Math.round(evaluation.communicationScore * 100)}%</p>
+            <p class="text-sm text-muted-foreground">Structure: ${Math.round(evaluation.structureScore * 100)}%</p>
+          </div>
+          <div class="mt-4">
+            <h5 class="font-medium mb-2">Ideal Response Example:</h5>
+            <p class="text-sm text-muted-foreground">${currentQ.evaluation?.idealResponse || 'Not available'}</p>
+          </div>
+        `;
+        
+        const questionPanel = document.querySelector('.question-panel');
+        if (questionPanel) {
+          questionPanel.appendChild(evaluationDiv);
+        }
       };
 
       mediaRecorder.start();

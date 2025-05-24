@@ -117,10 +117,17 @@ export interface VideoQuestion {
     keywords: string[];
     expectedDuration: number;
     sampleVideoUrl?: string;
+    idealResponse: string;
     evaluationCriteria: {
       technicalAccuracy: string[];
       communication: string[];
       structure: string[];
+    };
+    scoringRubric: {
+      technical: number;
+      communication: number;
+      structure: number;
+      timeManagement: number;
     };
   };
 }
