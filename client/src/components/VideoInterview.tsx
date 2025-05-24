@@ -190,7 +190,7 @@ export default function VideoInterview() {
   const isTimeUp = timeRemaining <= 0 && isRecording;
 
   useEffect(() => {
-    if (isTimeUp) {
+    if (timeRemaining <= 0 && isRecording) {
       stopRecording();
       toast({
         title: "Time's Up!",
@@ -198,7 +198,7 @@ export default function VideoInterview() {
         variant: "destructive"
       });
     }
-  }, [isTimeUp]);
+  }, [timeRemaining, isRecording, stopRecording]);
 
   return (
     <div className="space-y-6">
