@@ -34,7 +34,7 @@ export default function VideoInterview() {
   // Initialize random questions for this session
   useEffect(() => {
     const questions = getRandomVideoQuestions(5);
-    if (questions.length > 0) {
+    if (questions && questions.length > 0) {
       setSessionQuestions(questions);
       setCurrentQuestion(0);
     }
@@ -88,7 +88,7 @@ export default function VideoInterview() {
         video: videoEnabled, 
         audio: audioEnabled 
       });
-      
+
       const mediaRecorder = new MediaRecorder(stream);
       mediaRecorderRef.current = mediaRecorder;
       chunksRef.current = [];
@@ -111,7 +111,7 @@ export default function VideoInterview() {
       mediaRecorder.start();
       setIsRecording(true);
       setRecordingTime(0);
-      
+
       toast({
         title: "Recording Started",
         description: "Your video interview response is now being recorded.",
@@ -135,7 +135,7 @@ export default function VideoInterview() {
   const toggleVideo = async () => {
     const newVideoState = !videoEnabled;
     setVideoEnabled(newVideoState);
-    
+
     if (videoRef.current?.srcObject) {
       const stream = videoRef.current.srcObject as MediaStream;
       const videoTrack = stream.getVideoTracks()[0];
@@ -148,7 +148,7 @@ export default function VideoInterview() {
   const toggleAudio = async () => {
     const newAudioState = !audioEnabled;
     setAudioEnabled(newAudioState);
-    
+
     if (videoRef.current?.srcObject) {
       const stream = videoRef.current.srcObject as MediaStream;
       const audioTrack = stream.getAudioTracks()[0];
@@ -218,7 +218,7 @@ export default function VideoInterview() {
                   playsInline
                   className="w-full h-full object-cover"
                 />
-                
+
                 {/* Recording Indicator */}
                 {isRecording && (
                   <div className="absolute top-4 left-4 flex items-center space-x-2">
@@ -251,7 +251,7 @@ export default function VideoInterview() {
                     >
                       {videoEnabled ? <Video className="h-5 w-5" /> : <VideoOff className="h-5 w-5" />}
                     </Button>
-                    
+
                     <Button
                       variant="ghost"
                       size="icon"
