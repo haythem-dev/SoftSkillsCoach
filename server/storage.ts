@@ -293,6 +293,130 @@ export class MemStorage implements IStorage {
         sampleAnswer: "I use a structured ADR (Architecture Decision Record) format that captures: the context, considered options, decision made, and consequences. For stakeholder presentations, I create layered documentation: executive summary for leadership, technical details for engineering teams, and implementation guides for developers. I use visual diagrams extensively - system architecture diagrams, data flow charts, and decision trees. Before presenting, I validate understanding by asking stakeholders to explain the decision back to me in their own words. I also create 'decision artifacts' - prototypes or proof-of-concepts that demonstrate key architectural choices. This makes abstract decisions tangible and helps stakeholders understand implications viscerally rather than just intellectually.",
         tips: ["Use structured decision recording formats", "Create layered documentation for different audiences", "Use visual diagrams extensively", "Validate understanding through stakeholder feedback"],
         keywords: ["architectural documentation", "stakeholder communication", "visual presentation", "decision validation"]
+      },
+      // Additional Leadership questions (8-27)
+      {
+        title: "Managing Underperforming Team Members",
+        description: "You notice a senior developer's code quality has declined and they're missing deadlines. How do you address this situation while maintaining team morale?",
+        category: "leadership",
+        role: "tech-lead",
+        difficulty: "senior",
+        sampleAnswer: "I would first have a private one-on-one conversation to understand what's happening. I'd approach it with empathy: 'I've noticed some changes in your work patterns lately. Is everything okay?' Often performance issues stem from personal challenges, burnout, or unclear expectations. I'd listen actively, then collaborate on a plan: 'Let's identify what support you need to get back on track.' This might include pairing sessions, adjusting workload, or providing additional resources. I'd set clear, achievable goals with regular check-ins while being transparent about expectations.",
+        tips: ["Have private conversations first", "Approach with empathy and curiosity", "Listen actively to understand root causes", "Collaborate on improvement plans"],
+        keywords: ["performance management", "team leadership", "empathy", "improvement planning"]
+      },
+      {
+        title: "Leading Through Technical Disagreements",
+        description: "Your team is split between two technical approaches for a critical feature. How do you facilitate decision-making and ensure team alignment?",
+        category: "leadership",
+        role: "tech-lead",
+        difficulty: "senior",
+        sampleAnswer: "I would facilitate a structured technical discussion where each side presents their approach with clear criteria: performance, maintainability, timeline, and risk. I'd encourage questions and ensure everyone understands both options. Then I'd help the team evaluate against our specific constraints and goals. If consensus isn't reached, I'd make the final decision based on data and communicate the reasoning clearly: 'Based on our timeline constraints and the team's current expertise, we're going with approach A. Here's why...' I'd also acknowledge the other perspective and explain how we might revisit the decision in the future.",
+        tips: ["Facilitate structured technical discussions", "Use clear evaluation criteria", "Encourage questions and understanding", "Communicate decisions with clear reasoning"],
+        keywords: ["technical leadership", "decision facilitation", "team alignment", "conflict resolution"]
+      },
+      {
+        title: "Building Team Culture Remotely",
+        description: "How do you build and maintain team culture and collaboration in a distributed development team?",
+        category: "leadership",
+        role: "tech-lead",
+        difficulty: "mid",
+        sampleAnswer: "I focus on creating intentional touchpoints and shared experiences. We have daily standups with a few minutes for personal check-ins, weekly team retrospectives, and monthly virtual coffee chats. I establish clear communication norms: when to use Slack vs. video calls, how to signal availability, and response time expectations. I create opportunities for peer learning through code review sessions and technical lunch-and-learns. Most importantly, I model the behavior I want to see: being vulnerable about my own challenges, celebrating team wins publicly, and being consistent in my communication style.",
+        tips: ["Create intentional touchpoints", "Establish clear communication norms", "Facilitate peer learning opportunities", "Model desired behaviors consistently"],
+        keywords: ["remote leadership", "team culture", "communication norms", "distributed teams"]
+      },
+      // Additional Collaboration questions (8-27)
+      {
+        title: "Managing Stakeholder Expectations",
+        description: "A product manager is pushing for unrealistic timelines while the development team is concerned about technical debt. How do you navigate this situation?",
+        category: "collaboration",
+        role: "tech-lead",
+        difficulty: "senior",
+        sampleAnswer: "I would first gather data on our current technical debt and its impact on velocity. Then I'd schedule a meeting with both the product manager and key developers to discuss trade-offs transparently. I'd present the situation with concrete examples: 'If we rush this feature, we'll accumulate 2-3 days of additional technical debt, which will slow our next sprint by 20%.' I'd propose alternatives: a phased approach, reducing scope, or allocating time for debt reduction. The key is making the invisible costs visible and collaborating on solutions rather than just saying 'no' to timelines.",
+        tips: ["Gather concrete data on technical debt impact", "Facilitate transparent discussions with all stakeholders", "Present clear trade-offs with examples", "Propose alternative solutions"],
+        keywords: ["stakeholder management", "technical debt communication", "timeline negotiation", "trade-off analysis"]
+      },
+      {
+        title: "Cross-Department Integration Challenges",
+        description: "Your engineering team needs to integrate with the marketing team's analytics requirements, but there's a disconnect in technical understanding. How do you bridge this gap?",
+        category: "collaboration",
+        role: "software-developer",
+        difficulty: "mid",
+        sampleAnswer: "I would start by understanding their business requirements rather than jumping into technical solutions. I'd ask questions like: 'What specific user behaviors are you trying to track?' and 'How will this data influence your decisions?' Then I'd translate their needs into technical requirements and propose a solution that speaks to their goals: 'To track user engagement, we can implement event tracking that will give you conversion funnel data in real-time.' I'd create simple documentation or mockups to ensure we're aligned, and establish regular check-ins to validate that our implementation meets their actual needs.",
+        tips: ["Focus on business requirements first", "Ask clarifying questions about goals", "Translate between business and technical language", "Create visual aids for alignment"],
+        keywords: ["cross-department collaboration", "requirements translation", "business-technical alignment", "stakeholder communication"]
+      },
+      {
+        title: "Handling Conflicting Code Review Feedback",
+        description: "You receive contradictory feedback from two senior developers during code review. How do you resolve this and move forward?",
+        category: "collaboration",
+        role: "software-developer",
+        difficulty: "mid",
+        sampleAnswer: "I would first make sure I understand both perspectives by asking clarifying questions on each piece of feedback. Then I'd research the trade-offs and gather relevant information (performance benchmarks, best practices, team conventions). I'd schedule a brief discussion with both reviewers: 'I received different suggestions on the error handling approach. Could we discuss the trade-offs together?' During the discussion, I'd present what I learned and facilitate a technical conversation focused on our specific use case. If they still disagree, I'd escalate to the tech lead with a summary of both approaches and my analysis.",
+        tips: ["Understand both perspectives fully", "Research trade-offs independently", "Facilitate collaborative technical discussions", "Escalate with analysis when needed"],
+        keywords: ["code review", "conflict resolution", "technical discussion", "collaborative problem-solving"]
+      },
+      // Additional Communication questions (8-27)  
+      {
+        title: "Presenting Technical Solutions to Executives",
+        description: "You need to present a complex system architecture proposal to C-level executives who have limited technical background. How do you structure your presentation?",
+        category: "communication",
+        role: "architect",
+        difficulty: "senior",
+        sampleAnswer: "I would structure the presentation around business outcomes first: 'This architecture will reduce our customer onboarding time from 3 days to 30 minutes and decrease support tickets by 40%.' I'd use analogies they understand: 'Think of our current system like a single highway - when traffic increases, everyone slows down. This new architecture is like adding express lanes for different types of traffic.' I'd include a simple visual showing before/after states, focus on ROI and risk mitigation, and end with clear next steps and resource requirements. I'd prepare for questions about cost, timeline, and competitive advantage.",
+        tips: ["Lead with business outcomes", "Use familiar analogies", "Include simple before/after visuals", "Focus on ROI and risk"],
+        keywords: ["executive communication", "business outcome focus", "technical translation", "visual presentation"]
+      },
+      {
+        title: "Explaining Technical Debt to Non-Technical Stakeholders",
+        description: "How do you communicate the importance of addressing technical debt to product managers and business stakeholders who prioritize new features?",
+        category: "communication",
+        role: "tech-lead",
+        difficulty: "mid",
+        sampleAnswer: "I use the house maintenance analogy: 'Technical debt is like deferred maintenance on a house. You can delay fixing the roof, but eventually water damage affects everything.' I quantify the impact: 'Our current technical debt adds 30% to every new feature development time.' I present it as a business decision: 'We can spend 2 weeks now addressing core issues, or spend an extra day on every feature for the next 6 months.' I propose specific, time-boxed debt reduction with clear metrics: 'After this cleanup, new features will take 25% less time to develop, and our bug rate will decrease by 40%.'",
+        tips: ["Use relatable analogies", "Quantify the business impact", "Frame as investment vs. cost", "Propose specific, measurable solutions"],
+        keywords: ["technical debt communication", "business impact", "stakeholder education", "investment framing"]
+      },
+      {
+        title: "Facilitating Technical Design Reviews",
+        description: "You're leading a design review session with team members of different experience levels. How do you ensure productive discussion and knowledge sharing?",
+        category: "communication",
+        role: "tech-lead",
+        difficulty: "senior",
+        sampleAnswer: "I start by setting clear objectives and ground rules: 'Our goal is to identify potential issues and improve the design together. All questions and suggestions are valuable.' I use structured review formats: walking through user flows first, then diving into technical details. I actively encourage participation from junior members by asking specific questions: 'Sarah, how would this impact the frontend implementation?' I ensure senior members explain their reasoning: 'Can you walk us through why you prefer this approach?' I summarize decisions and action items clearly, and follow up with documentation that captures the rationale for future reference.",
+        tips: ["Set clear objectives and ground rules", "Use structured review formats", "Actively encourage broad participation", "Document decisions and rationale"],
+        keywords: ["design review facilitation", "inclusive leadership", "knowledge sharing", "structured communication"]
+      },
+      // Additional Problem-Solving questions (8-27)
+      {
+        title: "Performance Optimization Under Pressure",
+        description: "Your application is experiencing performance issues in production during peak traffic. Walk through your systematic approach to identify and resolve the bottleneck.",
+        category: "problem-solving",
+        role: "software-developer",
+        difficulty: "senior",
+        sampleAnswer: "First, I'd gather real-time metrics: response times, error rates, database query performance, and server resources. I'd implement quick wins first - perhaps increasing server capacity temporarily. Then I'd analyze the data systematically: identify the slowest endpoints, check database query plans, and review recent deployments. I'd use profiling tools to identify specific bottlenecks rather than guessing. Once identified, I'd implement targeted fixes: optimizing specific queries, adding caching, or refactoring inefficient code. Throughout the process, I'd communicate status updates to stakeholders and document findings for future prevention.",
+        tips: ["Gather metrics before making changes", "Implement quick wins for immediate relief", "Use systematic analysis over guesswork", "Communicate status and document learnings"],
+        keywords: ["performance optimization", "systematic debugging", "production issues", "metrics-driven solutions"]
+      },
+      {
+        title: "Legacy System Integration Challenges",
+        description: "You need to integrate a modern microservice with a legacy monolith that has poor documentation and unpredictable behavior. How do you approach this safely?",
+        category: "problem-solving",
+        role: "architect",
+        difficulty: "senior",
+        sampleAnswer: "I'd start by reverse-engineering the legacy system's behavior through careful observation and testing. I'd create a comprehensive test suite that documents the current behavior, even if it seems wrong. Then I'd implement an anti-corruption layer pattern - a translation interface that protects the new service from the legacy system's quirks. I'd use the strangler fig pattern for gradual migration: routing some traffic to the new service while keeping the legacy system as backup. I'd implement extensive monitoring and circuit breakers to fail gracefully when the legacy system behaves unexpectedly.",
+        tips: ["Document current behavior through testing", "Implement anti-corruption layers", "Use gradual migration patterns", "Build in monitoring and circuit breakers"],
+        keywords: ["legacy integration", "anti-corruption layer", "strangler fig pattern", "risk mitigation"]
+      },
+      {
+        title: "Debugging Intermittent Production Issues",
+        description: "You have a bug that only appears in production, happens randomly, and can't be reproduced in development. What's your debugging strategy?",
+        category: "problem-solving",
+        role: "software-developer",
+        difficulty: "senior",
+        sampleAnswer: "I'd start by enhancing observability without disrupting the system: adding detailed logging around suspected areas, implementing distributed tracing, and setting up alerts for when the issue occurs. I'd analyze patterns: time of day, user types, data volumes, or specific user flows that correlate with the issue. I'd create a staging environment that mirrors production as closely as possible, including data volumes and traffic patterns. If the issue involves race conditions or timing, I'd use chaos engineering techniques to introduce controlled stress. I'd also implement feature flags so I can quickly disable problematic code paths if needed.",
+        tips: ["Enhance observability first", "Look for patterns and correlations", "Mirror production conditions in staging", "Implement feature flags for quick rollbacks"],
+        keywords: ["production debugging", "observability", "pattern analysis", "chaos engineering"]
       }
     ];
 

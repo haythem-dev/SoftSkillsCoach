@@ -35,7 +35,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Get random questions for practice
   app.get("/api/questions/random", async (req, res) => {
     try {
-      const { role, category, limit = "5" } = req.query;
+      const { role, category, limit = "20" } = req.query;
       
       if (!role || !category) {
         return res.status(400).json({ message: "Role and category are required" });
