@@ -26,9 +26,9 @@ export default function PracticeSession({ role, category, onEndSession }: Practi
   const { toast } = useToast();
 
   const { data: questions = [], isLoading } = useQuery<Question[]>({
-    queryKey: ["/api/questions/random", { role, category, limit: "8" }],
+    queryKey: ["/api/questions/random", { role, category, limit: "20" }],
     queryFn: async () => {
-      const response = await fetch(`/api/questions/random?role=${role}&category=${category}&limit=8`);
+      const response = await fetch(`/api/questions/random?role=${role}&category=${category}&limit=20`);
       if (!response.ok) throw new Error("Failed to fetch questions");
       return response.json();
     },

@@ -153,7 +153,7 @@ export default function Dashboard() {
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8 pt-6 border-t border-border">
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-primary mb-1">5-8</div>
+                  <div className="text-2xl font-bold text-primary mb-1">20</div>
                   <div className="text-sm text-muted-foreground">Questions per session</div>
                 </div>
                 <div className="text-center">
