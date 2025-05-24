@@ -1,3 +1,4 @@
+
 import { useState, useRef, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -20,13 +21,15 @@ import { useToast } from "@/hooks/use-toast";
 import { getRandomVideoQuestions, VIDEO_INTERVIEW_QUESTIONS, type VideoQuestion } from "@/lib/video-interview-questions";
 
 export default function VideoInterview() {
-  // All useState hooks declared first
+  // All useState hooks
   const [isRecording, setIsRecording] = useState(false);
   const [videoEnabled, setVideoEnabled] = useState(true);
   const [audioEnabled, setAudioEnabled] = useState(true);
   const [recordingTime, setRecordingTime] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [sessionQuestions, setSessionQuestions] = useState<VideoQuestion[]>([]);
+  const [timeRemaining, setTimeRemaining] = useState(0);
+  const [isTimeWarning, setIsTimeWarning] = useState(false);
 
   // All useRef hooks
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -36,7 +39,7 @@ export default function VideoInterview() {
   // useToast hook
   const { toast } = useToast();
 
-  // All useEffect hooks
+  // Initialize questions
   useEffect(() => {
     const questions = getRandomVideoQuestions(5);
     if (questions && questions.length > 0) {
@@ -45,6 +48,7 @@ export default function VideoInterview() {
     }
   }, []);
 
+  // Recording timer
   useEffect(() => {
     let interval: NodeJS.Timeout;
     if (isRecording) {
@@ -55,6 +59,7 @@ export default function VideoInterview() {
     return () => clearInterval(interval);
   }, [isRecording]);
 
+  // Camera initialization
   useEffect(() => {
     startCamera();
     return () => {
@@ -62,6 +67,7 @@ export default function VideoInterview() {
     };
   }, []);
 
+  // Video track management
   useEffect(() => {
     if (videoRef.current?.srcObject) {
       const stream = videoRef.current.srcObject as MediaStream;
@@ -72,6 +78,7 @@ export default function VideoInterview() {
     }
   }, [videoEnabled]);
 
+  // Audio track management
   useEffect(() => {
     if (videoRef.current?.srcObject) {
       const stream = videoRef.current.srcObject as MediaStream;
@@ -81,6 +88,25 @@ export default function VideoInterview() {
       }
     }
   }, [audioEnabled]);
+
+  // Time management
+  useEffect(() => {
+    if (!sessionQuestions.length || currentQuestion >= sessionQuestions.length) return;
+    
+    const currentQ = sessionQuestions[currentQuestion];
+    const remaining = currentQ?.timeLimit ? currentQ.timeLimit - recordingTime : 0;
+    setTimeRemaining(remaining);
+    setIsTimeWarning(remaining <= 30 && isRecording);
+
+    if (remaining <= 0 && isRecording) {
+      stopRecording();
+      toast({
+        title: "Time's Up!",
+        description: "The recording has been automatically stopped as you've reached the time limit.",
+        variant: "destructive"
+      });
+    }
+  }, [recordingTime, isRecording, sessionQuestions, currentQuestion, toast]);
 
   const startCamera = async () => {
     try {
@@ -185,18 +211,6 @@ export default function VideoInterview() {
   }
 
   const currentQ = sessionQuestions[currentQuestion];
-  const timeRemaining = currentQ?.timeLimit ? currentQ.timeLimit - recordingTime : 0;
-  const isTimeWarning = timeRemaining <= 30 && isRecording;
-  useEffect(() => {
-    if (timeRemaining <= 0 && isRecording) {
-      stopRecording();
-      toast({
-        title: "Time's Up!",
-        description: "The recording has been automatically stopped as you've reached the time limit.",
-        variant: "destructive"
-      });
-    }
-  }, [timeRemaining, isRecording, toast]);
 
   return (
     <div className="space-y-6">
