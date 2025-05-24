@@ -104,3 +104,23 @@ export type InsertUserProgress = z.infer<typeof insertUserProgressSchema>;
 export const ROLES = ["software-developer", "tech-lead", "architect", "principal"] as const;
 export const CATEGORIES = ["communication", "collaboration", "leadership", "problem-solving", "technical-mentoring"] as const;
 export const DIFFICULTIES = ["junior", "mid", "senior"] as const;
+
+export interface VideoQuestion {
+  id: number;
+  category: string;
+  question: string;
+  timeLimit: number;
+  tips: string[];
+  difficulty: string;
+  role: string;
+  evaluation?: {
+    keywords: string[];
+    expectedDuration: number;
+    sampleVideoUrl?: string;
+    evaluationCriteria: {
+      technicalAccuracy: string[];
+      communication: string[];
+      structure: string[];
+    };
+  };
+}

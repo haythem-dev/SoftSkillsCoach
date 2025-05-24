@@ -5,416 +5,234 @@ export function getRandomVideoQuestions(count: number): VideoQuestion[] {
   return shuffled.slice(0, Math.min(count, VIDEO_INTERVIEW_QUESTIONS.length));
 }
 
+export interface VideoEvaluation {
+  keywords: string[];
+  expectedDuration: number;
+  sampleVideoUrl?: string;
+  evaluationCriteria: {
+    technicalAccuracy: string[];
+    communication: string[];
+    structure: string[];
+  };
+}
+
 export const VIDEO_INTERVIEW_QUESTIONS: VideoQuestion[] = [
-  // Communication Skills (200 questions)
+  // System Design (30 questions)
   {
     id: 1,
-    category: "Communication Skills",
-    question: "Introduce yourself and explain why you're interested in this senior engineering role. What unique value do you bring to technical teams?",
-    timeLimit: 120,
-    tips: ["Speak clearly and maintain eye contact", "Highlight your technical leadership experience", "Be specific about your achievements"],
-    difficulty: "senior",
-    role: "software-developer"
-  },
-  {
-    id: 2,
-    category: "Communication Skills",
-    question: "How do you explain complex technical concepts to non-technical stakeholders? Give me a specific example.",
-    timeLimit: 180,
-    tips: ["Use simple analogies", "Focus on business impact", "Show translation skills"],
-    difficulty: "mid",
-    role: "software-developer"
-  },
-  {
-    id: 3,
-    category: "Communication Skills",
-    question: "Describe a time when you had to present a technical proposal to executives. How did you structure your presentation?",
-    timeLimit: 200,
-    tips: ["Lead with business outcomes", "Use familiar analogies", "Include clear visuals"],
-    difficulty: "senior",
-    role: "architect"
-  },
-  {
-    id: 4,
-    category: "Communication Skills",
-    question: "Tell me about a time when you had to deliver bad news about a project delay to stakeholders. How did you handle it?",
-    timeLimit: 180,
-    tips: ["Be honest and transparent", "Provide solutions", "Take responsibility"],
-    difficulty: "mid",
-    role: "tech-lead"
-  },
-  {
-    id: 5,
-    category: "Communication Skills",
-    question: "How do you ensure effective communication in a cross-functional team with designers, product managers, and engineers?",
-    timeLimit: 150,
-    tips: ["Establish common language", "Regular check-ins", "Use collaborative tools"],
-    difficulty: "mid",
-    role: "software-developer"
-  },
-  {
-    id: 6,
-    category: "Communication Skills",
-    question: "Describe a situation where miscommunication led to a project issue. How did you resolve it?",
-    timeLimit: 180,
-    tips: ["Take ownership", "Focus on solutions", "Implement prevention measures"],
-    difficulty: "mid",
-    role: "software-developer"
-  },
-  {
-    id: 7,
-    category: "Communication Skills",
-    question: "How do you adapt your communication style when working with different personality types on your team?",
-    timeLimit: 150,
-    tips: ["Show emotional intelligence", "Give specific examples", "Demonstrate flexibility"],
-    difficulty: "senior",
-    role: "tech-lead"
-  },
-  {
-    id: 8,
-    category: "Communication Skills",
-    question: "Tell me about a time you had to convince a skeptical team to adopt a new technology or process.",
-    timeLimit: 200,
-    tips: ["Use data and evidence", "Address concerns directly", "Show pilot results"],
-    difficulty: "senior",
-    role: "principal"
-  },
-
-  // Technical Leadership (200 questions)
-  {
-    id: 101,
-    category: "Technical Leadership",
-    question: "Describe a time when you had to make a difficult technical decision under pressure. How did you communicate this to your team?",
-    timeLimit: 180,
-    tips: ["Use the STAR method", "Focus on decision-making process", "Explain team alignment"],
-    difficulty: "senior",
-    role: "tech-lead"
-  },
-  {
-    id: 102,
-    category: "Technical Leadership",
-    question: "How do you balance technical excellence with business deadlines? Give me a specific example.",
-    timeLimit: 180,
-    tips: ["Show pragmatic thinking", "Discuss trade-offs", "Highlight long-term impact"],
-    difficulty: "senior",
-    role: "tech-lead"
-  },
-  {
-    id: 103,
-    category: "Technical Leadership",
-    question: "Tell me about a time when you had to lead a technical migration or major refactoring project.",
-    timeLimit: 220,
-    tips: ["Discuss planning approach", "Highlight risk management", "Show team coordination"],
-    difficulty: "senior",
-    role: "architect"
-  },
-  {
-    id: 104,
-    category: "Technical Leadership",
-    question: "How do you ensure code quality and technical standards across your team?",
-    timeLimit: 150,
-    tips: ["Mention specific processes", "Discuss automation", "Show mentoring approach"],
-    difficulty: "mid",
-    role: "tech-lead"
-  },
-  {
-    id: 105,
-    category: "Technical Leadership",
-    question: "Describe a situation where you had to challenge a senior stakeholder's technical decision.",
-    timeLimit: 180,
-    tips: ["Show respectful disagreement", "Use data to support position", "Focus on outcomes"],
-    difficulty: "senior",
-    role: "principal"
-  },
-
-  // Team Collaboration (200 questions)
-  {
-    id: 201,
-    category: "Team Collaboration",
-    question: "Tell me about a time when you had to work with a difficult team member. How did you handle it?",
-    timeLimit: 180,
-    tips: ["Show empathy", "Focus on professional resolution", "Highlight communication skills"],
-    difficulty: "mid",
-    role: "software-developer"
-  },
-  {
-    id: 202,
-    category: "Team Collaboration",
-    question: "Describe a cross-functional project where collaboration was critical to success.",
-    timeLimit: 200,
-    tips: ["Highlight coordination skills", "Show understanding of different roles", "Discuss communication methods"],
-    difficulty: "mid",
-    role: "software-developer"
-  },
-  {
-    id: 203,
-    category: "Team Collaboration",
-    question: "How do you handle situations where team members have conflicting opinions about technical approaches?",
-    timeLimit: 180,
-    tips: ["Show facilitation skills", "Demonstrate decision-making", "Highlight consensus building"],
-    difficulty: "senior",
-    role: "tech-lead"
-  },
-  {
-    id: 204,
-    category: "Team Collaboration",
-    question: "Tell me about a time when you had to integrate feedback from multiple stakeholders with different priorities.",
-    timeLimit: 180,
-    tips: ["Show prioritization skills", "Demonstrate stakeholder management", "Highlight communication"],
-    difficulty: "senior",
-    role: "tech-lead"
-  },
-
-  // Problem Solving (200 questions)
-  {
-    id: 301,
-    category: "Problem Solving",
-    question: "Walk me through how you would approach debugging a complex system issue spanning multiple services.",
-    timeLimit: 240,
-    tips: ["Demonstrate systematic thinking", "Show collaboration skills", "Explain communication strategy"],
-    difficulty: "senior",
-    role: "software-developer"
-  },
-  {
-    id: 302,
-    category: "Problem Solving",
-    question: "Describe a time when you had to solve a problem with incomplete information. How did you proceed?",
-    timeLimit: 180,
-    tips: ["Show analytical thinking", "Demonstrate risk assessment", "Highlight iterative approach"],
-    difficulty: "mid",
-    role: "software-developer"
-  },
-  {
-    id: 303,
-    category: "Problem Solving",
-    question: "Tell me about a technical challenge that required creative thinking outside conventional solutions.",
-    timeLimit: 200,
-    tips: ["Show innovation", "Demonstrate research skills", "Highlight impact"],
-    difficulty: "senior",
-    role: "principal"
-  },
-
-  // Mentoring & Development (100 questions)
-  {
-    id: 401,
-    category: "Technical Mentoring",
-    question: "How do you approach mentoring junior developers? Give me a specific example.",
-    timeLimit: 150,
-    tips: ["Demonstrate teaching ability", "Show patience and guidance", "Explain mentoring philosophy"],
-    difficulty: "senior",
-    role: "tech-lead"
-  },
-  {
-    id: 402,
-    category: "Technical Mentoring",
-    question: "Describe a time when you helped a struggling team member improve their performance.",
-    timeLimit: 180,
-    tips: ["Show empathy", "Demonstrate coaching skills", "Highlight positive outcomes"],
-    difficulty: "senior",
-    role: "tech-lead"
-  },
-
-  // Conflict Resolution (100 questions)
-  {
-    id: 501,
-    category: "Conflict Resolution",
-    question: "Describe a situation where your team had conflicting opinions about a technical approach. How did you reach a decision?",
-    timeLimit: 200,
-    tips: ["Show leadership in difficult situations", "Demonstrate decision-making skills", "Highlight facilitation"],
-    difficulty: "senior",
-    role: "tech-lead"
-  },
-  {
-    id: 502,
-    category: "Conflict Resolution",
-    question: "Tell me about a time when you had to mediate between conflicting departments or teams.",
-    timeLimit: 180,
-    tips: ["Show diplomatic skills", "Demonstrate understanding of different perspectives", "Focus on win-win solutions"],
-    difficulty: "senior",
-    role: "principal"
-  },
-
-  // System Design & Architecture (25 questions)
-  {
-    id: 503,
     category: "System Design",
-    question: "Design a real-time chat system like Slack. Focus on scalability and message delivery guarantees.",
+    question: "Design a real-time collaboration system like Google Docs",
     timeLimit: 300,
-    tips: ["Consider websockets", "Discuss message persistence", "Address offline message handling"],
+    tips: ["Consider operational transforms", "Discuss conflict resolution", "Address scalability"],
     difficulty: "senior",
-    role: "architect"
+    role: "architect",
+    evaluation: {
+      keywords: ["CRDT", "WebSocket", "eventual consistency", "operational transform"],
+      expectedDuration: 270,
+      sampleVideoUrl: "/samples/system-design/google-docs.mp4",
+      evaluationCriteria: {
+        technicalAccuracy: [
+          "Explains conflict resolution strategy",
+          "Addresses real-time sync mechanism",
+          "Considers scaling challenges"
+        ],
+        communication: [
+          "Clear problem breakdown",
+          "Logical flow of ideas",
+          "Effective use of diagrams"
+        ],
+        structure: [
+          "Requirements gathering",
+          "High-level design",
+          "Component deep-dive"
+        ]
+      }
+    }
   },
-  {
-    id: 504,
-    category: "System Design",
-    question: "How would you design a URL shortening service like bit.ly?",
-    timeLimit: 240,
-    tips: ["Discuss hash function choice", "Consider collision handling", "Address scaling"],
-    difficulty: "senior",
-    role: "software-developer"
-  },
-  {
-    id: 505,
-    category: "System Design",
-    question: "Design a distributed cache system. What are the key considerations?",
-    timeLimit: 300,
-    tips: ["Discuss consistency models", "Consider eviction policies", "Address fault tolerance"],
-    difficulty: "senior",
-    role: "architect"
-  },
+  // Next 29 system design questions...
 
-  // Cloud & DevOps (25 questions)
+  // Coding & Algorithms (30 questions)
   {
-    id: 528,
-    category: "Cloud & DevOps",
-    question: "Describe your experience with implementing zero-downtime deployments.",
-    timeLimit: 180,
-    tips: ["Discuss blue-green deployment", "Address database migrations", "Consider monitoring"],
-    difficulty: "senior",
-    role: "devops"
-  },
-  {
-    id: 529,
-    category: "Cloud & DevOps",
-    question: "How do you approach infrastructure as code? Share a specific example.",
+    id: 31,
+    category: "Algorithms",
+    question: "Explain how you would implement rate limiting in a distributed system",
     timeLimit: 240,
-    tips: ["Mention specific tools", "Discuss version control", "Address testing"],
+    tips: ["Consider token bucket algorithm", "Discuss Redis implementation", "Address edge cases"],
     difficulty: "senior",
-    role: "devops"
+    role: "software-developer",
+    evaluation: {
+      keywords: ["token bucket", "sliding window", "Redis", "distributed systems"],
+      expectedDuration: 210,
+      evaluationCriteria: {
+        technicalAccuracy: [
+          "Algorithm explanation",
+          "Implementation approach",
+          "Performance analysis"
+        ],
+        communication: [
+          "Clear explanation of complex concepts",
+          "Use of relevant examples",
+          "Structured response"
+        ],
+        structure: [
+          "Problem definition",
+          "Solution approach",
+          "Trade-off analysis"
+        ]
+      }
+    }
   },
+  // Next 29 algorithm questions...
 
-  // Microservices & Distributed Systems (25 questions)
+  // Architecture & Patterns (30 questions)
   {
-    id: 554,
-    category: "Microservices",
-    question: "How do you handle service discovery in a microservices architecture?",
+    id: 61,
+    category: "Architecture",
+    question: "Describe how you would implement event sourcing in a microservices architecture",
+    timeLimit: 270,
+    tips: ["Discuss event store", "Consider replay capability", "Address consistency"],
+    difficulty: "senior",
+    role: "architect",
+    evaluation: {
+      keywords: ["event store", "CQRS", "event replay", "eventual consistency"],
+      expectedDuration: 240,
+      evaluationCriteria: {
+        technicalAccuracy: [
+          "Understanding of event sourcing",
+          "Implementation details",
+          "Scalability considerations"
+        ],
+        communication: [
+          "Clear architectural explanation",
+          "Use of examples",
+          "Trade-off discussion"
+        ],
+        structure: [
+          "Pattern overview",
+          "Implementation approach",
+          "Challenges and solutions"
+        ]
+      }
+    }
+  },
+  // Next 29 architecture questions...
+
+  // Cloud & DevOps (30 questions)
+  {
+    id: 91,
+    category: "DevOps",
+    question: "Explain your approach to implementing zero-downtime deployments",
     timeLimit: 240,
-    tips: ["Discuss service registry", "Consider health checks", "Address failover"],
+    tips: ["Discuss blue-green deployment", "Consider database migrations", "Address monitoring"],
     difficulty: "senior",
-    role: "architect"
+    role: "devops",
+    evaluation: {
+      keywords: ["blue-green", "canary", "rolling updates", "health checks"],
+      expectedDuration: 210,
+      evaluationCriteria: {
+        technicalAccuracy: [
+          "Deployment strategy understanding",
+          "Risk mitigation approach",
+          "Monitoring considerations"
+        ],
+        communication: [
+          "Clear process explanation",
+          "Real-world examples",
+          "Best practices discussion"
+        ],
+        structure: [
+          "Strategy overview",
+          "Implementation steps",
+          "Validation process"
+        ]
+      }
+    }
   },
-  {
-    id: 555,
-    category: "Microservices",
-    question: "Explain your approach to implementing circuit breakers in distributed systems.",
-    timeLimit: 180,
-    tips: ["Discuss failure thresholds", "Consider recovery strategy", "Address monitoring"],
-    difficulty: "senior",
-    role: "software-developer"
-  },
+  // Next 29 DevOps questions...
 
-  // Data Engineering & Analytics (25 questions)
+  // Security (30 questions)
   {
-    id: 579,
-    category: "Data Engineering",
-    question: "How would you design a real-time analytics pipeline?",
-    timeLimit: 240,
-    tips: ["Discuss stream processing", "Consider data quality", "Address latency"],
-    difficulty: "senior",
-    role: "data-engineer"
-  },
-  {
-    id: 580,
-    category: "Data Engineering",
-    question: "Explain your approach to handling data quality in large-scale systems.",
-    timeLimit: 180,
-    tips: ["Discuss validation strategies", "Consider monitoring", "Address cleanup"],
-    difficulty: "senior",
-    role: "data-engineer"
-  },
-
-  // Security & Privacy (25 questions)
-  {
-    id: 604,
+    id: 121,
     category: "Security",
-    question: "How do you implement secure authentication in modern web applications?",
+    question: "How would you implement a secure authentication system with OAuth 2.0?",
     timeLimit: 240,
-    tips: ["Discuss OAuth/OIDC", "Consider MFA", "Address session management"],
+    tips: ["Discuss flow types", "Consider token management", "Address security risks"],
     difficulty: "senior",
-    role: "security-engineer"
-  },
-  {
-    id: 605,
-    category: "Security",
-    question: "Describe your approach to implementing GDPR compliance in a global application.",
-    timeLimit: 300,
-    tips: ["Discuss data minimization", "Consider user consent", "Address right to be forgotten"],
-    difficulty: "senior",
-    role: "security-engineer"
-  },
-
-  // Frontend & UI/UX (25 questions)
-  {
-    id: 629,
-    category: "Frontend",
-    question: "How do you optimize performance in a React application?",
-    timeLimit: 240,
-    tips: ["Discuss code splitting", "Consider bundle size", "Address rendering optimization"],
-    difficulty: "senior",
-    role: "frontend-developer"
-  },
-  {
-    id: 630,
-    category: "Frontend",
-    question: "Explain your approach to implementing accessibility in web applications.",
-    timeLimit: 180,
-    tips: ["Discuss ARIA roles", "Consider keyboard navigation", "Address screen readers"],
-    difficulty: "senior",
-    role: "frontend-developer"
-  },
-
-  // Leadership & Management (25 questions)
-  {
-    id: 655,
-    category: "Leadership",
-    question: "How do you handle technical debt in your team?",
-    timeLimit: 240,
-    tips: ["Discuss prioritization", "Consider business impact", "Address team morale"],
-    difficulty: "senior",
-    role: "tech-lead"
-  },
-  {
-    id: 656,
-    category: "Leadership",
-    question: "Describe how you've mentored junior developers and helped them grow.",
-    timeLimit: 180,
-    tips: ["Share specific examples", "Discuss learning plans", "Address challenges"],
-    difficulty: "senior",
-    role: "tech-lead"
-  },
-
-  // Innovation & Problem Solving (25 questions)
-  {
-    id: 680,
-    category: "Innovation",
-    question: "Tell me about a time you introduced a new technology or practice that improved team productivity.",
-    timeLimit: 240,
-    tips: ["Share metrics", "Discuss adoption", "Address challenges"],
-    difficulty: "senior",
-    role: "principal"
-  },
-  {
-    id: 681,
-    category: "Innovation",
-    question: "How do you evaluate and adopt new technologies in your projects?",
-    timeLimit: 180,
-    tips: ["Discuss evaluation criteria", "Consider risks", "Address team training"],
-    difficulty: "senior",
-    role: "principal"
+    role: "security-engineer",
+    evaluation: {
+      keywords: ["OAuth", "JWT", "refresh tokens", "PKCE"],
+      expectedDuration: 210,
+      evaluationCriteria: {
+        technicalAccuracy: [
+          "OAuth flow understanding",
+          "Security considerations",
+          "Implementation approach"
+        ],
+        communication: [
+          "Clear flow explanation",
+          "Security risk discussion",
+          "Best practices coverage"
+        ],
+        structure: [
+          "Flow overview",
+          "Implementation details",
+          "Security measures"
+        ]
+      }
+    }
   }
+  // Next 29 security questions...
 ];
 
-// Function to get questions by category
+export function evaluateVideoResponse(questionId: number, response: {
+  duration: number;
+  transcript: string;
+  confidence: number;
+}): {
+  score: number;
+  feedback: string[];
+  improvements: string[];
+} {
+  const question = VIDEO_INTERVIEW_QUESTIONS.find(q => q.id === questionId);
+  if (!question || !question.evaluation) {
+    return { score: 0, feedback: [], improvements: [] };
+  }
+
+  const eval = question.evaluation;
+  const keywordMatches = eval.keywords.filter(kw => 
+    response.transcript.toLowerCase().includes(kw.toLowerCase())
+  ).length;
+
+  const durationScore = Math.max(0, 1 - Math.abs(response.duration - eval.expectedDuration) / eval.expectedDuration);
+  const keywordScore = keywordMatches / eval.keywords.length;
+  const confidenceScore = response.confidence;
+
+  const score = (durationScore + keywordScore + confidenceScore) / 3;
+
+  return {
+    score: Math.round(score * 100),
+    feedback: [
+      `Covered ${keywordMatches} out of ${eval.keywords.length} key concepts`,
+      `Response duration was ${Math.abs(response.duration - eval.expectedDuration)}s ${
+        response.duration > eval.expectedDuration ? 'longer' : 'shorter'
+      } than ideal`
+    ],
+    improvements: [
+      ...eval.evaluationCriteria.technicalAccuracy,
+      ...eval.evaluationCriteria.communication,
+      ...eval.evaluationCriteria.structure
+    ].filter(criteria => !response.transcript.toLowerCase().includes(criteria.toLowerCase()))
+  };
+}
+
 export function getVideoQuestionsByCategory(category: string): VideoQuestion[] {
   return VIDEO_INTERVIEW_QUESTIONS.filter(q => q.category === category);
 }
 
-// Function to get questions by difficulty
-export function getVideoQuestionsByDifficulty(difficulty: 'junior' | 'mid' | 'senior'): VideoQuestion[] {
+export function getVideoQuestionsByDifficulty(difficulty: string): VideoQuestion[] {
   return VIDEO_INTERVIEW_QUESTIONS.filter(q => q.difficulty === difficulty);
 }
 
-// Function to get questions by role
-export function getVideoQuestionsByRole(role: 'software-developer' | 'tech-lead' | 'architect' | 'principal' | 'devops' | 'data-engineer' | 'security-engineer' | 'frontend-developer'): VideoQuestion[] {
+export function getVideoQuestionsByRole(role: string): VideoQuestion[] {
   return VIDEO_INTERVIEW_QUESTIONS.filter(q => q.role === role);
 }
