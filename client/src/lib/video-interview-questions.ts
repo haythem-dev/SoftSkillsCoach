@@ -198,12 +198,12 @@ export function evaluateVideoResponse(questionId: number, response: {
     return { score: 0, feedback: [], improvements: [] };
   }
 
-  const eval = question.evaluation;
-  const keywordMatches = eval.keywords.filter(kw => 
+  const evaluateResult = question.evaluation;
+  const keywordMatches = evaluateResult.keywords.filter(kw => 
     response.transcript.toLowerCase().includes(kw.toLowerCase())
   ).length;
 
-  const durationScore = Math.max(0, 1 - Math.abs(response.duration - eval.expectedDuration) / eval.expectedDuration);
+  const durationScore = Math.max(0, 1 - Math.abs(response.duration - evaluateResult.expectedDuration) / evaluateResult.expectedDuration);
   const keywordScore = keywordMatches / eval.keywords.length;
   const confidenceScore = response.confidence;
 
