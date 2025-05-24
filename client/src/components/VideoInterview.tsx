@@ -34,14 +34,11 @@ export default function VideoInterview() {
   // Initialize random questions for this session
   useEffect(() => {
     const questions = getRandomVideoQuestions(5);
-    setSessionQuestions(questions);
-    setCurrentQuestion(0);
+    if (questions.length > 0) {
+      setSessionQuestions(questions);
+      setCurrentQuestion(0);
+    }
   }, []);
-
-  // Safety check for currentQ
-  if (!sessionQuestions.length || currentQuestion >= sessionQuestions.length) {
-    return <div>Loading questions...</div>;
-  }
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -177,8 +174,12 @@ export default function VideoInterview() {
     }
   };
 
+  if (!sessionQuestions.length || currentQuestion >= sessionQuestions.length) {
+    return <div>Loading questions...</div>;
+  }
+
   const currentQ = sessionQuestions[currentQuestion];
-  const timeRemaining = currentQ ? currentQ.timeLimit - recordingTime : 0;
+  const timeRemaining = currentQ?.timeLimit ? currentQ.timeLimit - recordingTime : 0;
   const isTimeWarning = timeRemaining <= 30 && isRecording;
   const isTimeUp = timeRemaining <= 0 && isRecording;
 
