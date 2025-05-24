@@ -17,6 +17,7 @@ import {
   Clock
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { getRandomVideoQuestions, type VideoQuestion } from "@/lib/video-interview-questions";
 
 export default function VideoInterview() {
   const [isRecording, setIsRecording] = useState(false);
@@ -24,115 +25,17 @@ export default function VideoInterview() {
   const [audioEnabled, setAudioEnabled] = useState(true);
   const [recordingTime, setRecordingTime] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [sessionQuestions, setSessionQuestions] = useState<VideoQuestion[]>([]);
   const videoRef = useRef<HTMLVideoElement>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
   const { toast } = useToast();
 
-  const videoQuestions = [
-    {
-      category: "Communication Skills",
-      question: "Introduce yourself and explain why you're interested in this senior engineering role. What unique value do you bring to technical teams?",
-      timeLimit: 120,
-      tips: ["Speak clearly and maintain eye contact", "Highlight your technical leadership experience", "Be specific about your achievements"]
-    },
-    {
-      category: "Technical Leadership",
-      question: "Describe a time when you had to make a difficult technical decision under pressure. How did you communicate this to your team and stakeholders?",
-      timeLimit: 180,
-      tips: ["Use the STAR method (Situation, Task, Action, Result)", "Focus on your decision-making process", "Explain how you handled team concerns"]
-    },
-    {
-      category: "Problem Solving",
-      question: "Walk me through how you would approach debugging a complex system issue that spans multiple services and teams. How would you coordinate the investigation?",
-      timeLimit: 240,
-      tips: ["Demonstrate systematic thinking", "Show collaboration skills", "Explain your communication strategy"]
-    },
-    {
-      category: "Team Collaboration",
-      question: "Tell me about a time when you had to work with a difficult team member or stakeholder. How did you handle the situation and what was the outcome?",
-      timeLimit: 180,
-      tips: ["Show empathy and emotional intelligence", "Focus on professional resolution", "Highlight communication skills"]
-    },
-    {
-      category: "Technical Mentoring",
-      question: "How do you approach mentoring junior developers? Give me a specific example of how you helped someone grow their technical skills.",
-      timeLimit: 150,
-      tips: ["Demonstrate teaching ability", "Show patience and guidance", "Explain your mentoring philosophy"]
-    },
-    {
-      category: "Conflict Resolution",
-      question: "Describe a situation where your team had conflicting opinions about a technical approach. How did you facilitate the discussion and reach a decision?",
-      timeLimit: 200,
-      tips: ["Show leadership in difficult situations", "Demonstrate decision-making skills", "Highlight facilitation abilities"]
-    },
-    {
-      category: "Stakeholder Management",
-      question: "Tell me about a time when you had to explain a complex technical issue to non-technical stakeholders. How did you ensure they understood the implications?",
-      timeLimit: 180,
-      tips: ["Use simple analogies", "Focus on business impact", "Show translation skills"]
-    },
-    {
-      category: "Innovation & Improvement",
-      question: "Describe a process or system improvement you initiated. What was the problem, your solution, and the impact on the team or organization?",
-      timeLimit: 200,
-      tips: ["Show initiative and innovation", "Quantify the impact", "Explain your problem-solving approach"]
-    },
-    {
-      category: "Pressure & Deadlines",
-      question: "Tell me about a time when you had to deliver a critical project under tight deadlines. How did you manage the pressure and ensure quality?",
-      timeLimit: 180,
-      tips: ["Show resilience under pressure", "Demonstrate prioritization skills", "Highlight quality management"]
-    },
-    {
-      category: "Cross-Functional Work",
-      question: "Describe your experience working with product managers, designers, or other non-engineering teams. How do you ensure effective collaboration?",
-      timeLimit: 150,
-      tips: ["Show adaptability", "Highlight communication across disciplines", "Demonstrate understanding of different perspectives"]
-    },
-    {
-      category: "Technical Communication",
-      question: "Walk me through how you would present a new architecture proposal to both technical and business audiences. What would you focus on for each group?",
-      timeLimit: 220,
-      tips: ["Show audience awareness", "Demonstrate technical depth", "Highlight business alignment"]
-    },
-    {
-      category: "Learning & Growth",
-      question: "Tell me about a time when you had to quickly learn a new technology or skill to complete a project. How did you approach the learning process?",
-      timeLimit: 150,
-      tips: ["Show adaptability", "Demonstrate learning strategies", "Highlight practical application"]
-    },
-    {
-      category: "Code Quality & Standards",
-      question: "How do you approach code reviews with your team? Describe a situation where you had to address code quality issues diplomatically.",
-      timeLimit: 180,
-      tips: ["Show attention to quality", "Demonstrate diplomatic communication", "Highlight teaching moments"]
-    },
-    {
-      category: "Project Leadership",
-      question: "Describe a project where you took on a leadership role. What challenges did you face and how did you ensure the project's success?",
-      timeLimit: 200,
-      tips: ["Show leadership capabilities", "Demonstrate project management skills", "Highlight team coordination"]
-    },
-    {
-      category: "Technical Decision Making",
-      question: "Tell me about a time when you had to choose between multiple technical solutions. What criteria did you use and how did you communicate your decision?",
-      timeLimit: 180,
-      tips: ["Show analytical thinking", "Demonstrate decision frameworks", "Highlight communication of reasoning"]
-    },
-    {
-      category: "Remote Collaboration",
-      question: "How do you maintain effective communication and collaboration in a remote or distributed team environment? Share a specific example.",
-      timeLimit: 150,
-      tips: ["Show adaptability to remote work", "Demonstrate communication tools usage", "Highlight relationship building"]
-    },
-    {
-      category: "Career Goals & Vision",
-      question: "Where do you see yourself in the next 3-5 years? How does this role align with your career goals and what impact do you want to make?",
-      timeLimit: 180,
-      tips: ["Show career planning", "Align with company goals", "Demonstrate long-term thinking"]
-    }
-  ];
+  // Initialize random questions for this session
+  useEffect(() => {
+    const questions = getRandomVideoQuestions(17);
+    setSessionQuestions(questions);
+  }, []);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -259,7 +162,7 @@ export default function VideoInterview() {
   };
 
   const nextQuestion = () => {
-    if (currentQuestion < videoQuestions.length - 1) {
+    if (currentQuestion < sessionQuestions.length - 1) {
       setCurrentQuestion(prev => prev + 1);
       setRecordingTime(0);
       if (isRecording) {
@@ -292,7 +195,7 @@ export default function VideoInterview() {
           <div className="flex items-center justify-between">
             <CardTitle>Video Interview Simulation</CardTitle>
             <Badge variant="outline">
-              Question {currentQuestion + 1} of {videoQuestions.length}
+              Question {currentQuestion + 1} of {sessionQuestions.length}
             </Badge>
           </div>
         </CardHeader>
