@@ -46,12 +46,22 @@ export default function VirtualInterviewer() {
   const [selectedInterviewer, setSelectedInterviewer] = useState<string>("sarah");
   const [interviewLevel, setInterviewLevel] = useState<string>("mid");
   const [isInterviewActive, setIsInterviewActive] = useState(false);
+  const [isDemoMode, setIsDemoMode] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [messages, setMessages] = useState<InterviewMessage[]>([]);
   const [currentResponse, setCurrentResponse] = useState("");
   const [timeElapsed, setTimeElapsed] = useState(0);
   const [overallScore, setOverallScore] = useState(0);
+  const [showBetaForm, setShowBetaForm] = useState(false);
+  const [betaFormData, setBetaFormData] = useState({
+    name: "",
+    email: "",
+    company: "",
+    role: "",
+    experience: "",
+    motivation: ""
+  });
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
@@ -120,8 +130,9 @@ export default function VirtualInterviewer() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const startInterview = () => {
+  const startInterview = (isDemo = false) => {
     setIsInterviewActive(true);
+    setIsDemoMode(isDemo);
     setTimeElapsed(0);
     setMessages([]);
     setOverallScore(0);
@@ -129,7 +140,9 @@ export default function VirtualInterviewer() {
     const interviewer = interviewers.find(i => i.id === selectedInterviewer)!;
     const openingMessage: InterviewMessage = {
       role: 'interviewer',
-      content: `Hi! I'm ${interviewer.name}, ${interviewer.role} at ${interviewer.company}. Thank you for taking the time to interview with us today. I'm excited to learn more about your experience and how you approach technical challenges. Shall we get started?`,
+      content: isDemo 
+        ? `Hi! Welcome to the demo version of our AI interview system. I'm ${interviewer.name}, and I'll give you a quick 2.5-minute preview of what our full interview experience offers. Ready to see how it works?`
+        : `Hi! I'm ${interviewer.name}, ${interviewer.role} at ${interviewer.company}. Thank you for taking the time to interview with us today. I'm excited to learn more about your experience and how you approach technical challenges. Shall we get started?`,
       timestamp: new Date()
     };
     
@@ -138,7 +151,9 @@ export default function VirtualInterviewer() {
     // Simulate asking first question after a brief pause
     setTimeout(() => {
       const questions = questionsByLevel[interviewLevel as keyof typeof questionsByLevel];
-      const firstQuestion = questions[0];
+      const firstQuestion = isDemo 
+        ? "For this demo, tell me briefly about a recent project you worked on and what role you played in it."
+        : questions[0];
       const questionMessage: InterviewMessage = {
         role: 'interviewer',
         content: firstQuestion,
@@ -148,8 +163,8 @@ export default function VirtualInterviewer() {
     }, 2000);
     
     toast({
-      title: "Interview Started",
-      description: "Your virtual interview has begun. Good luck!",
+      title: isDemo ? "Demo Started" : "Interview Started",
+      description: isDemo ? "Experience a 2.5-minute preview of our AI interview system!" : "Your virtual interview has begun. Good luck!",
     });
   };
 
@@ -161,16 +176,27 @@ export default function VirtualInterviewer() {
     
     const closingMessage: InterviewMessage = {
       role: 'interviewer',
-      content: `Thank you for your time today! Based on our conversation, I'd say you demonstrated strong technical communication skills. Your overall performance score is ${finalScore}/10. We'll be in touch soon with next steps.`,
+      content: isDemoMode 
+        ? `Great demo session! You've experienced our AI interview system. Your demo score is ${finalScore}/10. To access the full 30-minute interviews and advanced features, please request beta access. We'd love to have you join our platform!`
+        : `Thank you for your time today! Based on our conversation, I'd say you demonstrated strong technical communication skills. Your overall performance score is ${finalScore}/10. We'll be in touch soon with next steps.`,
       timestamp: new Date(),
       score: finalScore
     };
     
     setMessages(prev => [...prev, closingMessage]);
     
+    // Auto-end demo after 2.5 minutes
+    if (isDemoMode && timeElapsed >= 150) {
+      setTimeout(() => {
+        setShowBetaForm(true);
+      }, 3000);
+    }
+    
     toast({
-      title: "Interview Completed",
-      description: `Your final score: ${finalScore}/10. Check the feedback for areas to improve.`,
+      title: isDemoMode ? "Demo Completed" : "Interview Completed",
+      description: isDemoMode 
+        ? `Demo finished! Score: ${finalScore}/10. Request beta access for full features.`
+        : `Your final score: ${finalScore}/10. Check the feedback for areas to improve.`,
     });
   };
 
@@ -274,7 +300,153 @@ export default function VirtualInterviewer() {
     return AlertTriangle;
   };
 
+  const submitBetaRequest = async () => {
+    const emailContent = `
+Beta Access Request for TechSkills Platform
+
+Name: ${betaFormData.name}
+Email: ${betaFormData.email}
+Company: ${betaFormData.company}
+Current Role: ${betaFormData.role}
+Years of Experience: ${betaFormData.experience}
+Motivation: ${betaFormData.motivation}
+
+Submitted at: ${new Date().toLocaleString()}
+    `;
+
+    try {
+      toast({
+        title: "Beta Request Submitted!",
+        description: "Thank you! Please email this info to contact.beta.zbenyasystems@gmail.com. We'll send an invitation within 48 hours.",
+      });
+      
+      setShowBetaForm(false);
+      setBetaFormData({
+        name: "",
+        email: "",
+        company: "",
+        role: "",
+        experience: "",
+        motivation: ""
+      });
+    } catch (error) {
+      toast({
+        title: "Submission Failed",
+        description: "Please contact us directly at contact.beta.zbenyasystems@gmail.com",
+        variant: "destructive"
+      });
+    }
+  };
+
   const interviewer = interviewers.find(i => i.id === selectedInterviewer)!;
+
+  // Beta Access Form
+  if (showBetaForm) {
+    return (
+      <Card className="tech-card max-w-2xl mx-auto">
+        <CardHeader>
+          <CardTitle>Request Beta Access</CardTitle>
+          <p className="text-muted-foreground">
+            Join our exclusive beta program to access the full AI interview platform
+          </p>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="text-sm font-medium">Full Name *</label>
+              <input
+                type="text"
+                value={betaFormData.name}
+                onChange={(e) => setBetaFormData(prev => ({ ...prev, name: e.target.value }))}
+                className="w-full mt-1 px-3 py-2 border border-border rounded-lg"
+                placeholder="John Doe"
+                required
+              />
+            </div>
+            <div>
+              <label className="text-sm font-medium">Email Address *</label>
+              <input
+                type="email"
+                value={betaFormData.email}
+                onChange={(e) => setBetaFormData(prev => ({ ...prev, email: e.target.value }))}
+                className="w-full mt-1 px-3 py-2 border border-border rounded-lg"
+                placeholder="john@company.com"
+                required
+              />
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="text-sm font-medium">Company</label>
+              <input
+                type="text"
+                value={betaFormData.company}
+                onChange={(e) => setBetaFormData(prev => ({ ...prev, company: e.target.value }))}
+                className="w-full mt-1 px-3 py-2 border border-border rounded-lg"
+                placeholder="TechCorp"
+              />
+            </div>
+            <div>
+              <label className="text-sm font-medium">Current Role</label>
+              <input
+                type="text"
+                value={betaFormData.role}
+                onChange={(e) => setBetaFormData(prev => ({ ...prev, role: e.target.value }))}
+                className="w-full mt-1 px-3 py-2 border border-border rounded-lg"
+                placeholder="Senior Developer"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="text-sm font-medium">Years of Experience</label>
+            <select
+              value={betaFormData.experience}
+              onChange={(e) => setBetaFormData(prev => ({ ...prev, experience: e.target.value }))}
+              className="w-full mt-1 px-3 py-2 border border-border rounded-lg"
+            >
+              <option value="">Select experience level</option>
+              <option value="0-2">0-2 years</option>
+              <option value="3-5">3-5 years</option>
+              <option value="6-10">6-10 years</option>
+              <option value="10+">10+ years</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="text-sm font-medium">Why do you want to join our beta program? *</label>
+            <Textarea
+              value={betaFormData.motivation}
+              onChange={(e) => setBetaFormData(prev => ({ ...prev, motivation: e.target.value }))}
+              className="mt-1"
+              rows={4}
+              placeholder="Tell us about your interest in improving your soft skills and how you plan to use our platform..."
+              required
+            />
+          </div>
+
+          <Alert className="border-blue-200 bg-blue-50">
+            <AlertDescription className="text-blue-800">
+              <strong>Note:</strong> Please send the form details to <strong>contact.beta.zbenyasystems@gmail.com</strong> after submission. We'll review your application and send an invitation within 48 hours.
+            </AlertDescription>
+          </Alert>
+
+          <div className="flex items-center justify-between pt-4">
+            <Button variant="outline" onClick={() => setShowBetaForm(false)}>
+              Cancel
+            </Button>
+            <Button 
+              onClick={submitBetaRequest}
+              disabled={!betaFormData.name || !betaFormData.email || !betaFormData.motivation}
+            >
+              Submit Beta Request
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   if (!isInterviewActive) {
     return (
@@ -339,10 +511,14 @@ export default function VirtualInterviewer() {
             </div>
 
             {/* Start Interview */}
-            <div className="text-center pt-4">
-              <Button onClick={startInterview} size="lg" className="w-full max-w-md">
+            <div className="text-center pt-4 space-y-3">
+              <Button onClick={() => startInterview(true)} size="lg" className="w-full max-w-md" variant="outline">
                 <Play className="h-5 w-5 mr-2" />
-                Start 30-Minute Virtual Interview
+                Try 2.5-Minute Demo (Free)
+              </Button>
+              <Button onClick={() => setShowBetaForm(true)} size="lg" className="w-full max-w-md">
+                <User className="h-5 w-5 mr-2" />
+                Request Beta Access for Full Interview
               </Button>
             </div>
           </CardContent>
