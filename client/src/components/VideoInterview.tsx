@@ -153,10 +153,10 @@ export default function VideoInterview() {
         const evaluation = {
           duration: recordingTime,
           durationScore: Math.max(0, 1 - Math.abs(recordingTime - currentQ.timeLimit) / currentQ.timeLimit),
-          technicalScore: currentQ.evaluation?.scoringRubric.technical || 0,
-          communicationScore: currentQ.evaluation?.scoringRubric.communication || 0,
-          structureScore: currentQ.evaluation?.scoringRubric.structure || 0,
-          timeManagementScore: currentQ.evaluation?.scoringRubric.timeManagement || 0,
+          technicalScore: currentQ.evaluation?.scoringRubric?.technical ?? 0.7,
+          communicationScore: currentQ.evaluation?.scoringRubric?.communication ?? 0.7,
+          structureScore: currentQ.evaluation?.scoringRubric?.structure ?? 0.7,
+          timeManagementScore: currentQ.evaluation?.scoringRubric?.timeManagement ?? 0.7,
           overallScore: 0
         };
         
