@@ -26,13 +26,18 @@ function Router({ user }: { user: any }) {
 }
 
 function App() {
-  const [authenticatedUser, setAuthenticatedUser] = useState<any>(null);
+  const [authenticatedUser, setAuthenticatedUser] = useState<any>(() => {
+    const savedUser = localStorage.getItem('authenticatedUser');
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
 
   const handleAuthSuccess = (user: any) => {
+    localStorage.setItem('authenticatedUser', JSON.stringify(user));
     setAuthenticatedUser(user);
   };
 
   const handleLogout = () => {
+    localStorage.removeItem('authenticatedUser');
     setAuthenticatedUser(null);
   };
 
