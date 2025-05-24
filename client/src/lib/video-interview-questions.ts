@@ -1,8 +1,21 @@
 import type { VideoQuestion } from "@shared/schema";
 
 export function getRandomVideoQuestions(count: number): VideoQuestion[] {
-  const shuffled = [...VIDEO_INTERVIEW_QUESTIONS].sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, Math.min(count, VIDEO_INTERVIEW_QUESTIONS.length));
+  const categories = ['System Design', 'Algorithms', 'Architecture', 'DevOps', 'Security'];
+  const questionsPerCategory = Math.ceil(count / categories.length);
+  
+  const selectedQuestions: VideoQuestion[] = [];
+  categories.forEach(category => {
+    const categoryQuestions = VIDEO_INTERVIEW_QUESTIONS
+      .filter(q => q.category === category)
+      .sort(() => 0.5 - Math.random())
+      .slice(0, questionsPerCategory);
+    selectedQuestions.push(...categoryQuestions);
+  });
+  
+  return selectedQuestions
+    .sort(() => 0.5 - Math.random())
+    .slice(0, count);
 }
 
 export interface VideoEvaluation {
