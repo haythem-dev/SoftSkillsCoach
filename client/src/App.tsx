@@ -7,6 +7,7 @@ import Dashboard from "@/pages/dashboard";
 import AssessmentPage from "@/pages/assessment";
 import SimulatorPage from "@/pages/simulator";
 import VideoInterviewPage from "@/pages/video-interview";
+import VirtualInterviewPage from "@/pages/virtual-interview";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -16,6 +17,7 @@ function Router() {
       <Route path="/assessment" component={AssessmentPage} />
       <Route path="/simulator" component={SimulatorPage} />
       <Route path="/video-interview" component={VideoInterviewPage} />
+      <Route path="/virtual-interview" component={VirtualInterviewPage} />
       <Route component={NotFound} />
     </Switch>
   );

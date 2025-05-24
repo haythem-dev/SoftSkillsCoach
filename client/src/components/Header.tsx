@@ -36,6 +36,9 @@ export default function Header({ user }: HeaderProps) {
             <Button variant="ghost" className="text-muted-foreground hover:text-primary" onClick={() => window.location.href = '/video-interview'}>
               Video Practice
             </Button>
+            <Button variant="ghost" className="text-muted-foreground hover:text-primary" onClick={() => window.location.href = '/virtual-interview'}>
+              AI Interview
+            </Button>
           </nav>
 
           <div className="flex items-center space-x-4">
