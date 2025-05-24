@@ -171,8 +171,8 @@ export default function VideoInterview() {
     }
   };
 
-  const currentQ = videoQuestions[currentQuestion];
-  const timeRemaining = currentQ.timeLimit - recordingTime;
+  const currentQ = sessionQuestions[currentQuestion];
+  const timeRemaining = currentQ ? currentQ.timeLimit - recordingTime : 0;
   const isTimeWarning = timeRemaining <= 30 && isRecording;
   const isTimeUp = timeRemaining <= 0 && isRecording;
 
@@ -326,7 +326,7 @@ export default function VideoInterview() {
         </Button>
 
         <div className="flex items-center space-x-2">
-          {currentQuestion < videoQuestions.length - 1 ? (
+          {currentQuestion < sessionQuestions.length - 1 ? (
             <Button onClick={nextQuestion} disabled={isRecording}>
               Next Question
             </Button>
