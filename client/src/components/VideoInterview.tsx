@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -93,14 +92,10 @@ export default function VideoInterview() {
 
   // Time management
   useEffect(() => {
-    if (!sessionQuestions.length || currentQuestion >= sessionQuestions.length) return;
-    
     const currentQ = sessionQuestions[currentQuestion];
-    const remaining = currentQ?.timeLimit ? currentQ.timeLimit - recordingTime : 0;
-    setTimeRemaining(remaining);
-    setIsTimeWarning(remaining <= 30 && isRecording);
+    const timeRemaining = currentQ?.timeLimit ? currentQ.timeLimit - recordingTime : 0;
 
-    if (remaining <= 0 && isRecording) {
+    if (timeRemaining <= 0 && isRecording) {
       stopRecording();
       toast({
         title: "Time's Up!",
@@ -109,6 +104,10 @@ export default function VideoInterview() {
       });
     }
   }, [recordingTime, isRecording, sessionQuestions, currentQuestion, toast]);
+
+  const currentQ = sessionQuestions[currentQuestion];
+  const timeRemaining = currentQ?.timeLimit ? currentQ.timeLimit - recordingTime : 0;
+  const isTimeWarning = timeRemaining <= 30 && isRecording;
 
   const startCamera = async () => {
     try {
@@ -212,7 +211,6 @@ export default function VideoInterview() {
     return <div>Loading questions...</div>;
   }
 
-  const currentQ = sessionQuestions[currentQuestion];
 
   return (
     <div className="space-y-6">
